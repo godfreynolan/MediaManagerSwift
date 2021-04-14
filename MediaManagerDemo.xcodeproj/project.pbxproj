@@ -15,6 +15,7 @@
 		3A805F9B26273B7700B3899B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805F9A26273B7700B3899B /* AppDelegate.swift */; };
 		3A805FA926273FF900B3899B /* DemoComponentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805FA826273FF900B3899B /* DemoComponentHelper.swift */; };
 		3A805FB326274CEC00B3899B /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805FB226274CEC00B3899B /* AlertView.swift */; };
+		3A805FB526275C9C00B3899B /* DefaultLayoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805FB426275C9C00B3899B /* DefaultLayoutViewController.swift */; };
 		A41CA8BB1F39962B0087BE43 /* DJIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = A41CA8B61F39962B0087BE43 /* DJIAlertView.m */; };
 		A41CA8BC1F39962B0087BE43 /* DJIScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A41CA8B81F39962B0087BE43 /* DJIScrollView.m */; };
 		A41CA8BD1F39962B0087BE43 /* DJIScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A41CA8B91F39962B0087BE43 /* DJIScrollView.xib */; };
@@ -23,7 +24,6 @@
 		A4E313D91F3022AC001203C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4E313D71F3022AC001203C6 /* Main.storyboard */; };
 		A4E313DB1F3022AC001203C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4E313DA1F3022AC001203C6 /* Assets.xcassets */; };
 		A4E313DE1F3022AC001203C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4E313DC1F3022AC001203C6 /* LaunchScreen.storyboard */; };
-		A4E313F31F302606001203C6 /* DefaultLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E313F21F302606001203C6 /* DefaultLayoutViewController.m */; };
 		A4E313F91F30281C001203C6 /* MediaManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E313F81F30281C001203C6 /* MediaManagerViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +55,7 @@
 		3A805F9A26273B7700B3899B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A805FA826273FF900B3899B /* DemoComponentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoComponentHelper.swift; sourceTree = "<group>"; };
 		3A805FB226274CEC00B3899B /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlertView.swift; path = ../../../../../../AlertView.swift; sourceTree = "<group>"; };
+		3A805FB426275C9C00B3899B /* DefaultLayoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DefaultLayoutViewController.swift; path = ../../../../../DefaultLayoutViewController.swift; sourceTree = "<group>"; };
 		A41CA8B31F39962B0087BE43 /* DemoUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoUtility.h; sourceTree = "<group>"; };
 		A41CA8B51F39962B0087BE43 /* DJIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIAlertView.h; sourceTree = "<group>"; };
 		A41CA8B61F39962B0087BE43 /* DJIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJIAlertView.m; sourceTree = "<group>"; };
@@ -69,8 +70,6 @@
 		A4E313DA1F3022AC001203C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A4E313DD1F3022AC001203C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A4E313DF1F3022AC001203C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A4E313F11F302606001203C6 /* DefaultLayoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultLayoutViewController.h; sourceTree = "<group>"; };
-		A4E313F21F302606001203C6 /* DefaultLayoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultLayoutViewController.m; sourceTree = "<group>"; };
 		A4E313F71F30281C001203C6 /* MediaManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaManagerViewController.h; sourceTree = "<group>"; };
 		A4E313F81F30281C001203C6 /* MediaManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaManagerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -166,8 +165,7 @@
 				14FF8D69213EA37900B23316 /* VideoPreviewerAdapter */,
 				A4E313D41F3022AC001203C6 /* MainViewController.h */,
 				A4E313D51F3022AC001203C6 /* MainViewController.m */,
-				A4E313F11F302606001203C6 /* DefaultLayoutViewController.h */,
-				A4E313F21F302606001203C6 /* DefaultLayoutViewController.m */,
+				3A805FB426275C9C00B3899B /* DefaultLayoutViewController.swift */,
 				A4E313F71F30281C001203C6 /* MediaManagerViewController.h */,
 				A4E313F81F30281C001203C6 /* MediaManagerViewController.m */,
 				A4E313D71F3022AC001203C6 /* Main.storyboard */,
@@ -316,7 +314,7 @@
 				14FF8D72213EA37900B23316 /* VideoPreviewerSDKAdapter+Lightbridge2.m in Sources */,
 				3A805F9926273AA200B3899B /* DemoUtility.swift in Sources */,
 				A41CA8BB1F39962B0087BE43 /* DJIAlertView.m in Sources */,
-				A4E313F31F302606001203C6 /* DefaultLayoutViewController.m in Sources */,
+				3A805FB526275C9C00B3899B /* DefaultLayoutViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
