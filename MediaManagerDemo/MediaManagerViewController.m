@@ -28,7 +28,7 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 @property(nonatomic, strong) NSMutableArray* mediaList;
 @property (nonatomic, weak) DJIMediaManager *mediaManager;
-@property(nonatomic, strong) DJIAlertView* statusAlertView;
+@property(nonatomic, strong) AlertView *statusAlertView;
 @property(nonatomic) DJIMediaFile *selectedMedia;
 @property(nonatomic) NSUInteger previousOffset;
 @property(nonatomic) NSMutableData *fileData;
@@ -325,20 +325,20 @@
     WeakRef(target);
     if (self.statusAlertView == nil) {
         NSString* message = [NSString stringWithFormat:@"Fetch Media Data \n 0.0"];
-        self.statusAlertView = [DJIAlertView showAlertViewWithMessage:message titles:@[@"Cancel"] action:^(NSUInteger buttonIndex) {
-            WeakReturn(target);
-            if (buttonIndex == 0) {
-                [target.selectedMedia stopFetchingFileDataWithCompletion:^(NSError * _Nullable error) {
-                    target.statusAlertView = nil;
-                }];
-            }
-        }];
+//        self.statusAlertView = [AlertView showAlertViewWithMessage:message titles:@[@"Cancel"] action:^(NSUInteger buttonIndex) {
+//            WeakReturn(target);
+//            if (buttonIndex == 0) {
+//                [target.selectedMedia stopFetchingFileDataWithCompletion:^(NSError * _Nullable error) {
+//                    target.statusAlertView = nil;
+//                }];
+//            }
+//        }];
     }
     
     [self.selectedMedia fetchFileDataWithOffset:self.previousOffset updateQueue:dispatch_get_main_queue() updateBlock:^(NSData * _Nullable data, BOOL isComplete, NSError * _Nullable error) {
         WeakReturn(target);
         if (error) {
-            [target.statusAlertView updateMessage:[[NSString alloc] initWithFormat:@"Download Media Failed:%@",error]];
+            //[target.statusAlertView updateMessage:[[NSString alloc] initWithFormat:@"Download Media Failed:%@",error]];
             [target performSelector:@selector(dismissStatusAlertView) withObject:nil afterDelay:2.0];
         }
         else
@@ -353,7 +353,7 @@
             }
             target.previousOffset += data.length;
             float progress = target.previousOffset * 100.0 / target.selectedMedia.fileSizeInBytes;
-            [target.statusAlertView updateMessage:[NSString stringWithFormat:@"Downloading: %0.1f%%", progress]];
+            //[target.statusAlertView updateMessage:[NSString stringWithFormat:@"Downloading: %0.1f%%", progress]];
             if (target.previousOffset == target.selectedMedia.fileSizeInBytes && isComplete) {
                 [target dismissStatusAlertView];
                 if (isPhoto) {
@@ -460,12 +460,12 @@
     
     WeakRef(target);
     if (self.statusAlertView == nil) {
-        self.statusAlertView = [DJIAlertView showAlertViewWithMessage:message titles:@[@"Dismiss"] action:^(NSUInteger buttonIndex) {
-            WeakReturn(target);
-            if (buttonIndex == 0) {
-                [target dismissStatusAlertView];
-            }
-        }];
+//        self.statusAlertView = [AlertView showAlertViewWithMessage:message titles:@[@"Dismiss"] action:^(NSUInteger buttonIndex) {
+//            WeakReturn(target);
+//            if (buttonIndex == 0) {
+//                [target dismissStatusAlertView];
+//            }
+//        }];
     }
 }
 

@@ -7,7 +7,7 @@
 
 #import "VideoPreviewerSDKAdapter+Lightbridge2.h"
 #import "DemoUtility.h"
-#import "DemoComponentHelper.h"
+//#import "DemoComponentHelper.h"
 #import <DJISDK/DJISDK.h>
 #import <DJIWidget/DJIVideoPreviewer.h>
 #import <MediaManagerDemo-Swift.h>
