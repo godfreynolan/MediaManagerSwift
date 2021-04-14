@@ -12,13 +12,13 @@
 		14FF8D72213EA37900B23316 /* VideoPreviewerSDKAdapter+Lightbridge2.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FF8D6E213EA37900B23316 /* VideoPreviewerSDKAdapter+Lightbridge2.m */; };
 		14FF8D78213EA80500B23316 /* DemoComponentHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FF8D76213EA80400B23316 /* DemoComponentHelper.m */; };
 		2EF53DE212C23CFC55BC0728 /* Pods_MediaManagerDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 138448A2BD052583B81674CB /* Pods_MediaManagerDemo.framework */; };
+		3A805F9926273AA200B3899B /* DemoUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805F9826273AA200B3899B /* DemoUtility.swift */; };
+		3A805F9B26273B7700B3899B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805F9A26273B7700B3899B /* AppDelegate.swift */; };
 		A41CA8BA1F39962B0087BE43 /* DemoUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = A41CA8B41F39962B0087BE43 /* DemoUtility.m */; };
 		A41CA8BB1F39962B0087BE43 /* DJIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = A41CA8B61F39962B0087BE43 /* DJIAlertView.m */; };
 		A41CA8BC1F39962B0087BE43 /* DJIScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A41CA8B81F39962B0087BE43 /* DJIScrollView.m */; };
 		A41CA8BD1F39962B0087BE43 /* DJIScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A41CA8B91F39962B0087BE43 /* DJIScrollView.xib */; };
 		A44F554C21776C4100FC3003 /* DistortionResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A44F554B21776C4100FC3003 /* DistortionResource.bundle */; };
-		A4E313D01F3022AC001203C6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E313CF1F3022AC001203C6 /* main.m */; };
-		A4E313D31F3022AC001203C6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E313D21F3022AC001203C6 /* AppDelegate.m */; };
 		A4E313D61F3022AC001203C6 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E313D51F3022AC001203C6 /* MainViewController.m */; };
 		A4E313D91F3022AC001203C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4E313D71F3022AC001203C6 /* Main.storyboard */; };
 		A4E313DB1F3022AC001203C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4E313DA1F3022AC001203C6 /* Assets.xcassets */; };
@@ -52,6 +52,9 @@
 		14FF8D76213EA80400B23316 /* DemoComponentHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoComponentHelper.m; sourceTree = "<group>"; };
 		14FF8D77213EA80400B23316 /* DemoComponentHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoComponentHelper.h; sourceTree = "<group>"; };
 		2247A303FAF91BC28A12F8AB /* Pods-MediaManagerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MediaManagerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-MediaManagerDemo/Pods-MediaManagerDemo.release.xcconfig"; sourceTree = "<group>"; };
+		3A805F9726273AA200B3899B /* MediaManagerDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MediaManagerDemo-Bridging-Header.h"; sourceTree = "<group>"; };
+		3A805F9826273AA200B3899B /* DemoUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoUtility.swift; sourceTree = "<group>"; };
+		3A805F9A26273B7700B3899B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A41CA8B31F39962B0087BE43 /* DemoUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoUtility.h; sourceTree = "<group>"; };
 		A41CA8B41F39962B0087BE43 /* DemoUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoUtility.m; sourceTree = "<group>"; };
 		A41CA8B51F39962B0087BE43 /* DJIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIAlertView.h; sourceTree = "<group>"; };
@@ -61,9 +64,6 @@
 		A41CA8B91F39962B0087BE43 /* DJIScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DJIScrollView.xib; sourceTree = "<group>"; };
 		A44F554B21776C4100FC3003 /* DistortionResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DistortionResource.bundle; sourceTree = "<group>"; };
 		A4E313CB1F3022AC001203C6 /* MediaManagerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaManagerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A4E313CF1F3022AC001203C6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		A4E313D11F3022AC001203C6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		A4E313D21F3022AC001203C6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		A4E313D41F3022AC001203C6 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		A4E313D51F3022AC001203C6 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		A4E313D81F3022AC001203C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -123,6 +123,7 @@
 			children = (
 				A41CA8B31F39962B0087BE43 /* DemoUtility.h */,
 				A41CA8B41F39962B0087BE43 /* DemoUtility.m */,
+				3A805F9826273AA200B3899B /* DemoUtility.swift */,
 				14FF8D77213EA80400B23316 /* DemoComponentHelper.h */,
 				14FF8D76213EA80400B23316 /* DemoComponentHelper.m */,
 				A41CA8B51F39962B0087BE43 /* DJIAlertView.h */,
@@ -130,6 +131,7 @@
 				A41CA8B71F39962B0087BE43 /* DJIScrollView.h */,
 				A41CA8B81F39962B0087BE43 /* DJIScrollView.m */,
 				A41CA8B91F39962B0087BE43 /* DJIScrollView.xib */,
+				3A805F9726273AA200B3899B /* MediaManagerDemo-Bridging-Header.h */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -164,8 +166,6 @@
 			isa = PBXGroup;
 			children = (
 				14FF8D69213EA37900B23316 /* VideoPreviewerAdapter */,
-				A4E313D11F3022AC001203C6 /* AppDelegate.h */,
-				A4E313D21F3022AC001203C6 /* AppDelegate.m */,
 				A4E313D41F3022AC001203C6 /* MainViewController.h */,
 				A4E313D51F3022AC001203C6 /* MainViewController.m */,
 				A4E313F11F302606001203C6 /* DefaultLayoutViewController.h */,
@@ -178,17 +178,9 @@
 				A4E313DA1F3022AC001203C6 /* Assets.xcassets */,
 				A4E313DC1F3022AC001203C6 /* LaunchScreen.storyboard */,
 				A4E313DF1F3022AC001203C6 /* Info.plist */,
-				A4E313CE1F3022AC001203C6 /* Supporting Files */,
+				3A805F9A26273B7700B3899B /* AppDelegate.swift */,
 			);
 			path = MediaManagerDemo;
-			sourceTree = "<group>";
-		};
-		A4E313CE1F3022AC001203C6 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				A4E313CF1F3022AC001203C6 /* main.m */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,6 +218,7 @@
 					A4E313CA1F3022AC001203C6 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = R725LZS4G8;
+						LastSwiftMigration = 1240;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -314,18 +307,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A805F9B26273B7700B3899B /* AppDelegate.swift in Sources */,
 				14FF8D78213EA80500B23316 /* DemoComponentHelper.m in Sources */,
 				14FF8D71213EA37900B23316 /* DJIDecodeImageCalibrateControlLogic.m in Sources */,
 				A4E313D61F3022AC001203C6 /* MainViewController.m in Sources */,
-				A4E313D31F3022AC001203C6 /* AppDelegate.m in Sources */,
 				A4E313F91F30281C001203C6 /* MediaManagerViewController.m in Sources */,
 				A41CA8BC1F39962B0087BE43 /* DJIScrollView.m in Sources */,
 				14FF8D70213EA37900B23316 /* VideoPreviewerSDKAdapter.m in Sources */,
 				A41CA8BA1F39962B0087BE43 /* DemoUtility.m in Sources */,
 				14FF8D72213EA37900B23316 /* VideoPreviewerSDKAdapter+Lightbridge2.m in Sources */,
+				3A805F9926273AA200B3899B /* DemoUtility.swift in Sources */,
 				A41CA8BB1F39962B0087BE43 /* DJIAlertView.m in Sources */,
 				A4E313F31F302606001203C6 /* DefaultLayoutViewController.m in Sources */,
-				A4E313D01F3022AC001203C6 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +439,7 @@
 			baseConfigurationReference = 0BDC738B2EB46ED9C0C96850 /* Pods-MediaManagerDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = R725LZS4G8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -453,6 +447,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dji.FPVDemoSwiftRIIS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MediaManagerDemo/Utilities/MediaManagerDemo-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "arm64 arm64e armv7s";
 			};
 			name = Debug;
@@ -462,6 +459,7 @@
 			baseConfigurationReference = 2247A303FAF91BC28A12F8AB /* Pods-MediaManagerDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = R725LZS4G8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -469,6 +467,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dji.FPVDemoSwiftRIIS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MediaManagerDemo/Utilities/MediaManagerDemo-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "arm64 arm64e armv7s";
 			};
 			name = Release;

@@ -14,6 +14,7 @@
 #import <DJIWidget/DJIRTPlayerRenderView.h>
 #import "VideoPreviewerSDKAdapter.h"
 #import <Photos/Photos.h>
+#import <MediaManagerDemo-Swift.h>
 
 @interface MediaManagerViewController ()<DJICameraDelegate, DJIMediaManagerDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITextField *positionTextField;
@@ -83,7 +84,7 @@
     DJICamera *camera = [DemoUtility fetchCamera];
     [camera setMode:DJICameraModeShootPhoto withCompletion:^(NSError * _Nullable error) {
         if (error) {
-            ShowResult(@"Set CameraWorkModeShootPhoto Failed, %@", error.description);
+            [DemoUtility showWithResult:[NSString stringWithFormat:@"Set CameraWorkModeShootPhoto Failed, %@", error.description]];
         }
     }];
     
@@ -211,7 +212,7 @@
         [self.mediaManager refreshFileListOfStorageLocation:DJICameraStorageLocationSDCard withCompletion:^(NSError * _Nullable error) {
             WeakReturn(target);
             if (error) {
-                ShowResult(@"Fetch Media File List Failed: %@", error.localizedDescription);
+                //ShowResult(@"Fetch Media File List Failed: %@", error.localizedDescription);
             }
             else {
                 NSLog(@"Fetch Media File List Success.");
@@ -373,7 +374,7 @@
         [self.positionTextField setPlaceholder:[NSString stringWithFormat:@"%d sec", (int)self.selectedMedia.durationInSeconds]];
         [self.mediaManager playVideo:self.selectedMedia withCompletion:^(NSError * _Nullable error) {
             if (error) {
-                ShowResult(@"Play Video Failed: %@", error.description);
+                //ShowResult(@"Play Video Failed: %@", error.description);
             }
         }];
     }
@@ -383,7 +384,7 @@
     
     [self.mediaManager resumeWithCompletion:^(NSError * _Nullable error) {
         if (error) {
-            ShowResult(@"Resume failed: %@", error.description);
+            //ShowResult(@"Resume failed: %@", error.description);
         }
     }];
 }
@@ -391,7 +392,7 @@
 - (IBAction)pauseBtnAction:(id)sender {
     [self.mediaManager pauseWithCompletion:^(NSError * _Nullable error) {
         if (error) {
-            ShowResult(@"Pause failed: %@", error.description);
+            //ShowResult(@"Pause failed: %@", error.description);
         }
     }];
 }
@@ -399,7 +400,7 @@
 - (IBAction)stopBtnAction:(id)sender {
     [self.mediaManager stopWithCompletion:^(NSError * _Nullable error) {
         if (error) {
-            ShowResult(@"Stop failed: %@", error.description);
+            //ShowResult(@"Stop failed: %@", error.description);
         }
     }];
 }
@@ -414,7 +415,7 @@
     [self.mediaManager moveToPosition:second withCompletion:^(NSError * _Nullable error) {
         WeakReturn(target);
         if (error) {
-            ShowResult(@"Move to position failed: %@", error.description);
+            //ShowResult(@"Move to position failed: %@", error.description);
         }
         [target.positionTextField setText: @""];
     }];
@@ -559,13 +560,13 @@
     DJIMediaFile* currentMedia = [self.mediaList objectAtIndex:indexPath.row];
     [self.mediaManager deleteFiles:@[currentMedia] withCompletion:^(NSArray<DJIMediaFile *> * _Nonnull failedFiles, NSError * _Nullable error) {
         if (error) {
-            ShowResult(@"Delete File Failed:%@",error.description);
+            //ShowResult(@"Delete File Failed:%@",error.description);
             for (DJIMediaFile * media in failedFiles) {
                 NSLog(@"%@ delete failed",media.fileName);
             }
         }else
         {
-            ShowResult(@"Delete File Successfully");
+            //ShowResult(@"Delete File Successfully");
             [self.mediaList removeObjectAtIndex:indexPath.row];
             [self.mediaTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
         }

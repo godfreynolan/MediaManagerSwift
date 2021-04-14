@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "DemoUtility.h"
+#import <MediaManagerDemo-Swift.h>
 
 #define ENTER_DEBUG_MODE 0
 
@@ -66,7 +67,7 @@
 {
     if (!error) {
         
-        ShowResult(@"Registration Success");
+        [DemoUtility showWithResult:@"Registration Success"];
 #if ENTER_DEBUG_MODE
         [DJISDKManager enableBridgeModeWithBridgeAppIP:@"10.01.15.112"];
 #else
@@ -75,7 +76,7 @@
         
     }else
     {
-        ShowResult([NSString stringWithFormat:@"Registration Error:%@", error]);
+        [DemoUtility showWithResult:[NSString stringWithFormat:@"Registration Error:%@", error]];
         [self.connectButton setEnabled:NO];
     }
     
@@ -93,7 +94,7 @@
     //If this demo is used in China, it's required to login to your DJI account to activate the application. Also you need to use DJI Go app to bind the aircraft to your DJI account. For more details, please check this demo's tutorial.
     [[DJISDKManager userAccountManager] logIntoDJIUserAccountWithAuthorizationRequired:NO withCompletion:^(DJIUserAccountState state, NSError * _Nullable error) {
         if (error) {
-            ShowResult(@"Login failed: %@", error.description);
+            [DemoUtility showWithResult:[NSString stringWithFormat:@"Login failed: %@", error.description]];
         }
     }];
 }
