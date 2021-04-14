@@ -94,7 +94,7 @@
         <!--Default Layout View Controller-->
         <scene sceneID="mfv-R6-BnO">
             <objects>
-                <viewController id="9N5-LL-iQO" customClass="DefaultLayoutViewController" sceneMemberID="viewController">
+                <viewController id="9N5-LL-iQO" customClass="DefaultLayoutViewController" customModule="MediaManagerDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Oox-GU-cwA"/>
                         <viewControllerLayoutGuide type="bottom" id="szS-wo-ghG"/>
