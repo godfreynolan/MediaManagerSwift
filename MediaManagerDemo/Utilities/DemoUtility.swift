@@ -41,16 +41,4 @@ class DemoUtility: NSObject {
         }
         return nil
     }
-
-    //+(DJIFlightController*) fetchFlightController {
-    //    if (![DJISDKManager product]) {
-    //        return nil;
-    //    }
-    //
-    //    if ([[DJISDKManager product] isKindOfClass:[DJIAircraft class]]) {
-    //        return ((DJIAircraft*)[DJISDKManager product]).flightController;
-    //    }
-    //
-    //    return nil;
-    //}
 }

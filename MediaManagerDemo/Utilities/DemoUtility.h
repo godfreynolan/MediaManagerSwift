@@ -25,14 +25,3 @@
 
 #define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 667)
 #define IS_IPHONE_6 (IS_IPHONE && SCREEN_MAX_LENGTH == 568)
-
-//extern void ShowResult(NSString *format, ...);
-//
-//@interface DemoUtility : NSObject
-//
-//+(DJIBaseProduct*) fetchProduct;
-//+(DJICamera*) fetchCamera;
-//+(DJIAircraft*) fetchAircraft;
-//+(DJIFlightController*) fetchFlightController;
-//
-//@end
