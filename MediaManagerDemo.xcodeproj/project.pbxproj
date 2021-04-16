@@ -11,6 +11,7 @@
 		14FF8D71213EA37900B23316 /* DJIDecodeImageCalibrateControlLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FF8D6D213EA37900B23316 /* DJIDecodeImageCalibrateControlLogic.m */; };
 		14FF8D72213EA37900B23316 /* VideoPreviewerSDKAdapter+Lightbridge2.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FF8D6E213EA37900B23316 /* VideoPreviewerSDKAdapter+Lightbridge2.m */; };
 		2EF53DE212C23CFC55BC0728 /* Pods_MediaManagerDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 138448A2BD052583B81674CB /* Pods_MediaManagerDemo.framework */; };
+		3A58A100262A1F4500753039 /* MediaManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A58A0FF262A1F4500753039 /* MediaManagerViewController.swift */; };
 		3A805F9926273AA200B3899B /* DemoUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805F9826273AA200B3899B /* DemoUtility.swift */; };
 		3A805F9B26273B7700B3899B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805F9A26273B7700B3899B /* AppDelegate.swift */; };
 		3A805FA926273FF900B3899B /* DemoComponentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805FA826273FF900B3899B /* DemoComponentHelper.swift */; };
@@ -24,7 +25,6 @@
 		A4E313D91F3022AC001203C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4E313D71F3022AC001203C6 /* Main.storyboard */; };
 		A4E313DB1F3022AC001203C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4E313DA1F3022AC001203C6 /* Assets.xcassets */; };
 		A4E313DE1F3022AC001203C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4E313DC1F3022AC001203C6 /* LaunchScreen.storyboard */; };
-		A4E313F91F30281C001203C6 /* MediaManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E313F81F30281C001203C6 /* MediaManagerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -50,6 +50,7 @@
 		14FF8D6E213EA37900B23316 /* VideoPreviewerSDKAdapter+Lightbridge2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VideoPreviewerSDKAdapter+Lightbridge2.m"; sourceTree = "<group>"; };
 		14FF8D6F213EA37900B23316 /* VideoPreviewerSDKAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPreviewerSDKAdapter.h; sourceTree = "<group>"; };
 		2247A303FAF91BC28A12F8AB /* Pods-MediaManagerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MediaManagerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-MediaManagerDemo/Pods-MediaManagerDemo.release.xcconfig"; sourceTree = "<group>"; };
+		3A58A0FF262A1F4500753039 /* MediaManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManagerViewController.swift; sourceTree = "<group>"; };
 		3A805F9726273AA200B3899B /* MediaManagerDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MediaManagerDemo-Bridging-Header.h"; sourceTree = "<group>"; };
 		3A805F9826273AA200B3899B /* DemoUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoUtility.swift; sourceTree = "<group>"; };
 		3A805F9A26273B7700B3899B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -68,8 +69,6 @@
 		A4E313DA1F3022AC001203C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A4E313DD1F3022AC001203C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A4E313DF1F3022AC001203C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A4E313F71F30281C001203C6 /* MediaManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaManagerViewController.h; sourceTree = "<group>"; };
-		A4E313F81F30281C001203C6 /* MediaManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaManagerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,8 +161,7 @@
 				3A805F9A26273B7700B3899B /* AppDelegate.swift */,
 				3A805FB426275C9C00B3899B /* DefaultLayoutViewController.swift */,
 				3A805FBA2627626100B3899B /* MainViewController.swift */,
-				A4E313F71F30281C001203C6 /* MediaManagerViewController.h */,
-				A4E313F81F30281C001203C6 /* MediaManagerViewController.m */,
+				3A58A0FF262A1F4500753039 /* MediaManagerViewController.swift */,
 				A4E313DC1F3022AC001203C6 /* LaunchScreen.storyboard */,
 				A4E313D71F3022AC001203C6 /* Main.storyboard */,
 				14FF8D69213EA37900B23316 /* VideoPreviewerAdapter */,
@@ -301,9 +299,9 @@
 			files = (
 				3A805F9B26273B7700B3899B /* AppDelegate.swift in Sources */,
 				3A805FBB2627626100B3899B /* MainViewController.swift in Sources */,
+				3A58A100262A1F4500753039 /* MediaManagerViewController.swift in Sources */,
 				14FF8D71213EA37900B23316 /* DJIDecodeImageCalibrateControlLogic.m in Sources */,
 				3A805FA926273FF900B3899B /* DemoComponentHelper.swift in Sources */,
-				A4E313F91F30281C001203C6 /* MediaManagerViewController.m in Sources */,
 				3A805FB326274CEC00B3899B /* AlertView.swift in Sources */,
 				3A805FC926276DB600B3899B /* DJIScrollView.swift in Sources */,
 				14FF8D70213EA37900B23316 /* VideoPreviewerSDKAdapter.m in Sources */,

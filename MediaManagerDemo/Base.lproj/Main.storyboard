@@ -298,7 +298,7 @@
                                     </constraint>
                                 </constraints>
                             </imageView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Qfe-Iz-cyk">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Qfe-Iz-cyk">
                                 <rect key="frame" x="493.5" y="365.5" width="37" height="37"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yJT-IX-Zrm">
@@ -430,7 +430,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Qfe-Iz-cyk" firstAttribute="centerY" secondItem="iPf-Gz-zf2" secondAttribute="centerY" id="0Rg-9k-KH5"/>
                             <constraint firstItem="MvZ-tg-EH7" firstAttribute="leading" secondItem="Bns-N3-djo" secondAttribute="trailing" constant="8" id="2yi-ld-kYc"/>
                             <constraint firstItem="yJT-IX-Zrm" firstAttribute="leading" secondItem="Yvy-Cu-6h0" secondAttribute="trailing" constant="8" id="3id-dS-cso"/>
                             <constraint firstItem="O9w-mi-gSB" firstAttribute="leading" secondItem="yzF-XN-6PV" secondAttribute="trailing" constant="8" id="5JS-YR-dTU">
@@ -494,14 +493,14 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="cancelBtn" destination="yJT-IX-Zrm" id="XSu-WB-Ye3"/>
-                        <outlet property="displayImageView" destination="tQM-Z3-9N5" id="cTz-fD-gJm"/>
-                        <outlet property="editBtn" destination="Yvy-Cu-6h0" id="vIo-GT-6aj"/>
-                        <outlet property="loadingIndicator" destination="Qfe-Iz-cyk" id="pTY-e5-Sv5"/>
-                        <outlet property="mediaTableView" destination="ITp-Ih-Waf" id="1VF-xc-pe5"/>
-                        <outlet property="positionTextField" destination="MvZ-tg-EH7" id="HOt-mC-kMl"/>
-                        <outlet property="reloadBtn" destination="7s3-p4-edU" id="DEc-KR-DV2"/>
-                        <outlet property="videoPreviewView" destination="K8K-DD-Eb0" id="kMr-Co-G0v"/>
+                        <outlet property="cancelBtn" destination="yJT-IX-Zrm" id="3C3-nv-Z2A"/>
+                        <outlet property="displayImageView" destination="tQM-Z3-9N5" id="3rL-Yt-F9P"/>
+                        <outlet property="editBtn" destination="Yvy-Cu-6h0" id="2U4-mT-3bh"/>
+                        <outlet property="loadingIndicator" destination="Qfe-Iz-cyk" id="nz7-9m-ODe"/>
+                        <outlet property="mediaTableView" destination="ITp-Ih-Waf" id="swK-wQ-u3u"/>
+                        <outlet property="positionTextField" destination="MvZ-tg-EH7" id="x4B-r4-GWL"/>
+                        <outlet property="reloadBtn" destination="7s3-p4-edU" id="UUB-O2-J9l"/>
+                        <outlet property="videoPreviewView" destination="K8K-DD-Eb0" id="cbr-ff-Dht"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yq9-Rn-oca" userLabel="First Responder" sceneMemberID="firstResponder"/>
