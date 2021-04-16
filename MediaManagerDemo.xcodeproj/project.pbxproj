@@ -17,8 +17,8 @@
 		3A805FB326274CEC00B3899B /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805FB226274CEC00B3899B /* AlertView.swift */; };
 		3A805FB526275C9C00B3899B /* DefaultLayoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805FB426275C9C00B3899B /* DefaultLayoutViewController.swift */; };
 		3A805FBB2627626100B3899B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805FBA2627626100B3899B /* MainViewController.swift */; };
+		3A805FC926276DB600B3899B /* DJIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805FC826276DB600B3899B /* DJIScrollView.swift */; };
 		A41CA8BB1F39962B0087BE43 /* DJIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = A41CA8B61F39962B0087BE43 /* DJIAlertView.m */; };
-		A41CA8BC1F39962B0087BE43 /* DJIScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A41CA8B81F39962B0087BE43 /* DJIScrollView.m */; };
 		A41CA8BD1F39962B0087BE43 /* DJIScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A41CA8B91F39962B0087BE43 /* DJIScrollView.xib */; };
 		A44F554C21776C4100FC3003 /* DistortionResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A44F554B21776C4100FC3003 /* DistortionResource.bundle */; };
 		A4E313D91F3022AC001203C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4E313D71F3022AC001203C6 /* Main.storyboard */; };
@@ -57,11 +57,10 @@
 		3A805FB226274CEC00B3899B /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlertView.swift; path = ../../../../../../AlertView.swift; sourceTree = "<group>"; };
 		3A805FB426275C9C00B3899B /* DefaultLayoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DefaultLayoutViewController.swift; path = ../../../../../DefaultLayoutViewController.swift; sourceTree = "<group>"; };
 		3A805FBA2627626100B3899B /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = ../../../../../MainViewController.swift; sourceTree = "<group>"; };
+		3A805FC826276DB600B3899B /* DJIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DJIScrollView.swift; path = ../../../../../../DJIScrollView.swift; sourceTree = "<group>"; };
 		A41CA8B31F39962B0087BE43 /* DemoUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoUtility.h; sourceTree = "<group>"; };
 		A41CA8B51F39962B0087BE43 /* DJIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIAlertView.h; sourceTree = "<group>"; };
 		A41CA8B61F39962B0087BE43 /* DJIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJIAlertView.m; sourceTree = "<group>"; };
-		A41CA8B71F39962B0087BE43 /* DJIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIScrollView.h; sourceTree = "<group>"; };
-		A41CA8B81F39962B0087BE43 /* DJIScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJIScrollView.m; sourceTree = "<group>"; };
 		A41CA8B91F39962B0087BE43 /* DJIScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DJIScrollView.xib; sourceTree = "<group>"; };
 		A44F554B21776C4100FC3003 /* DistortionResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DistortionResource.bundle; sourceTree = "<group>"; };
 		A4E313CB1F3022AC001203C6 /* MediaManagerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaManagerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,8 +123,7 @@
 				A41CA8B51F39962B0087BE43 /* DJIAlertView.h */,
 				A41CA8B61F39962B0087BE43 /* DJIAlertView.m */,
 				3A805FB226274CEC00B3899B /* AlertView.swift */,
-				A41CA8B71F39962B0087BE43 /* DJIScrollView.h */,
-				A41CA8B81F39962B0087BE43 /* DJIScrollView.m */,
+				3A805FC826276DB600B3899B /* DJIScrollView.swift */,
 				A41CA8B91F39962B0087BE43 /* DJIScrollView.xib */,
 				3A805F9726273AA200B3899B /* MediaManagerDemo-Bridging-Header.h */,
 			);
@@ -162,16 +160,16 @@
 			isa = PBXGroup;
 			children = (
 				3A805F9A26273B7700B3899B /* AppDelegate.swift */,
-				14FF8D69213EA37900B23316 /* VideoPreviewerAdapter */,
-				3A805FBA2627626100B3899B /* MainViewController.swift */,
 				3A805FB426275C9C00B3899B /* DefaultLayoutViewController.swift */,
+				3A805FBA2627626100B3899B /* MainViewController.swift */,
 				A4E313F71F30281C001203C6 /* MediaManagerViewController.h */,
 				A4E313F81F30281C001203C6 /* MediaManagerViewController.m */,
+				A4E313DC1F3022AC001203C6 /* LaunchScreen.storyboard */,
 				A4E313D71F3022AC001203C6 /* Main.storyboard */,
+				14FF8D69213EA37900B23316 /* VideoPreviewerAdapter */,
 				A41CA8B21F39962B0087BE43 /* Utilities */,
 				A44F554A21776C1B00FC3003 /* Resource */,
 				A4E313DA1F3022AC001203C6 /* Assets.xcassets */,
-				A4E313DC1F3022AC001203C6 /* LaunchScreen.storyboard */,
 				A4E313DF1F3022AC001203C6 /* Info.plist */,
 			);
 			path = MediaManagerDemo;
@@ -307,7 +305,7 @@
 				3A805FA926273FF900B3899B /* DemoComponentHelper.swift in Sources */,
 				A4E313F91F30281C001203C6 /* MediaManagerViewController.m in Sources */,
 				3A805FB326274CEC00B3899B /* AlertView.swift in Sources */,
-				A41CA8BC1F39962B0087BE43 /* DJIScrollView.m in Sources */,
+				3A805FC926276DB600B3899B /* DJIScrollView.swift in Sources */,
 				14FF8D70213EA37900B23316 /* VideoPreviewerSDKAdapter.m in Sources */,
 				14FF8D72213EA37900B23316 /* VideoPreviewerSDKAdapter+Lightbridge2.m in Sources */,
 				3A805F9926273AA200B3899B /* DemoUtility.swift in Sources */,
@@ -439,6 +437,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = MediaManagerDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dji.FPVDemoSwiftRIIS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "MediaManagerDemo/Utilities/MediaManagerDemo-Bridging-Header.h";

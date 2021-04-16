@@ -9,7 +9,6 @@
 #import "MediaManagerViewController.h"
 #import "DemoUtility.h"
 #import "DJIAlertView.h"
-#import "DJIScrollView.h"
 #import <DJIWidget/DJIVideoPreviewer.h>
 #import <DJIWidget/DJIRTPlayerRenderView.h>
 #import "VideoPreviewerSDKAdapter.h"
@@ -484,7 +483,7 @@
     [stateStr appendFormat:@"Status: %@\n", [self statusToString:state.playbackStatus]];
     [stateStr appendFormat:@"Position: %f\n", state.playingPosition];
     
-    [self.statusView writeStatus:stateStr];
+    [self.statusView writeWithStatus:stateStr];
 }
 
 -(void)manager:(DJIMediaManager *)manager didUpdateVideoPlaybackData:(uint8_t *)data length:(size_t)length forRendering:(BOOL)forRendering {
