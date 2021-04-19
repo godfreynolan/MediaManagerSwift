@@ -8,6 +8,7 @@
 
 import Foundation
 import DJISDK
+import DJIWidget
 
 class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMediaManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
@@ -20,20 +21,28 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     @IBOutlet weak var reloadBtn: UIButton!
     @IBOutlet weak var videoPreviewView: UIView!
     
+    var showVideoPreivewView: UIView? //TODO: fix spelling, also how is this different from videoPreviewView?
+    var previewerAdapter: VideoPreviewerSDKAdapter?
+    
     weak var mediaManager : DJIMediaManager?
+    var mediaList : [DJIMediaFile]?
+    //@property(nonatomic, strong) NSMutableArray* mediaList;
 
     //TODO: need these?
-    //@property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
-    //@property(nonatomic, strong) NSMutableArray* mediaList;
+    
     //@property(nonatomic, strong) AlertView *statusAlertView;
+    var statusAlertView : AlertView?
     //@property(nonatomic) DJIMediaFile *selectedMedia;
+    var selectedMedia : DJIMediaFile?
     //@property(nonatomic) NSUInteger previousOffset;
+    var previousOffset : UInt?
     //@property(nonatomic) NSMutableData *fileData;
+    var fileData : Data?
     //@property (nonatomic) DJIScrollView *statusView;
+    var statusView : DJIScrollView?
     //@property (nonatomic, strong) NSIndexPath *selectedCellIndexPath;
     //@property (nonatomic, strong) DJIRTPlayerRenderView *renderView;
-    //@property (nonatomic, strong) VideoPreviewerSDKAdapter* previewerAdapter;
-    //@property (nonatomic, strong) UIView *showVideoPreivewView;
+    var renderView : DJIRTPlayerRenderView?
 
     
     
@@ -104,34 +113,6 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
             camera.delegate = nil
             self.mediaManager?.delegate = nil
         }
-        
-        
-
-        //
-        //    if (camera && camera.delegate == self) {
-        //        [camera setDelegate:nil];
-        //        self.mediaManager.delegate = nil;
-        //    }
-        //
-        //    if (camera &&
-        //        ([camera.displayName isEqualToString:DJICameraDisplayNamePhantom4Camera] ||
-        //         [camera.displayName isEqualToString:DJICameraDisplayNamePhantom4ProCamera] ||
-        //         [camera.displayName isEqualToString:DJICameraDisplayNamePhantom4AdvancedCamera] ||
-        //         [camera.displayName isEqualToString:DJICameraDisplayNameX4S] ||
-        //         [camera.displayName isEqualToString:DJICameraDisplayNameX5S] ||
-        //         [camera.displayName isEqualToString:DJICameraDisplayNameX7] ||
-        //         [camera.displayName isEqualToString:DJICameraDisplayNameX3] ||
-        //         [camera.displayName isEqualToString:DJICameraDisplayNameXT] ||
-        //         [camera.displayName isEqualToString:DJICameraDisplayNameZ3] ||
-        //         [camera.displayName isEqualToString:DJICameraDisplayNameZ30] ||
-        //         [camera.displayName isEqualToString:DJICameraDisplayNameXT2Visual] ||
-        //         [camera.displayName isEqualToString:DJICameraDisplayNameXT2Thermal] ||
-        //         [camera.displayName isEqualToString:DJICameraDisplayNamePhantom3AdvancedCamera])) {
-        //            [self cleanupRenderViewPlaybacker];
-        //        } else {
-        //            [self cleanupVideoPreviewer];
-        //        }
-        
     }
     
     func hasPlaybackFor(cameraName:String) -> Bool {
@@ -150,66 +131,58 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
                cameraName == DJICameraDisplayNamePhantom3AdvancedCamera
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.initData()
+    }
 
-    //
-    //- (void)viewDidLoad {
-    //    [super viewDidLoad];
-    //    [self initData];
-    //}
-    //
-    //- (void)didReceiveMemoryWarning {
-    //    [super didReceiveMemoryWarning];
-    //    // Dispose of any resources that can be recreated.
-    //}
-    //
-    //- (BOOL)prefersStatusBarHidden {
-    //    return NO;
-    //}
-    //
-    //#pragma mark - Custom Methods
-    //- (void)initData
-    //{
-    //    self.mediaList = [[NSMutableArray alloc] init];
-    //    [self.deleteBtn setEnabled:NO];
-    //    [self.cancelBtn setEnabled:NO];
-    //    [self.reloadBtn setEnabled:NO];
-    //    [self.editBtn setEnabled:NO];
-    //
-    //    self.fileData = nil;
-    //    self.selectedMedia = nil;
-    //    self.previousOffset = 0;
-    //
-    //    self.statusView = [DJIScrollView viewWithViewController:self];
-    //    [self.statusView setHidden:YES];
-    //}
-    //
-    
-    func setupRenderViewPlaybacker() {
-        print("TODO: setupRenderViewPlaybacker")
+    //TODO: can be property?
+    func prefersStatusBarHidden() -> Bool {
+        return false
     }
     
-    //- (void)setupRenderViewPlaybacker
-    //{
-    //    //Support Video Playback for Phantom 4 Professional, Inspire 2
-    //    H264EncoderType encoderType = H264EncoderType_unknown;
-    //    DJICamera *camera = [DemoUtility fetchCamera];
-    //    if (camera && ([camera.displayName isEqualToString:DJICameraDisplayNamePhantom4ProCamera] ||
-    //                   [camera.displayName isEqualToString:DJICameraDisplayNamePhantom4AdvancedCamera]||
-    //                   [camera.displayName isEqualToString:DJICameraDisplayNameX4S] ||
-    //                   [camera.displayName isEqualToString:DJICameraDisplayNameX5S])) { //Phantom 4 Professional, Phantom 4 Advanced and Inspire 2
-    //        encoderType = H264EncoderType_H1_Inspire2;
-    //    }
-    //
-    //    self.renderView = [[DJIRTPlayerRenderView alloc] initWithDecoderType:LiveStreamDecodeType_VTHardware
-    //                                                             encoderType:encoderType];
-    //    self.renderView.frame = self.videoPreviewView.bounds;
-    //    [self.videoPreviewView addSubview:self.renderView];
-    //    [self.renderView setHidden:YES];
-    //}
-    //
+    //#pragma mark - Custom Methods
+    func initData() {
+        self.mediaList = [DJIMediaFile]()
+        self.cancelBtn.isEnabled = false
+        self.reloadBtn.isEnabled = false
+        self.editBtn.isEnabled = false
+        
+        self.fileData = nil
+        self.selectedMedia = nil
+        self.previousOffset = 0
+        
+        self.statusView = DJIScrollView.viewWith(viewController: self)
+        self.statusView?.isHidden = true
+        
+    }
     
-    func cleanupRenderViewPlaybacker() {
-        print("TODO: cleanupRenderViewPlaybacker")
+    func setupRenderViewPlaybacker() {
+        //Support Video Playback for Phantom 4 Professional, Inspire 2
+        var encoderType = H264EncoderType._unknown
+        if let camera = DemoUtility.fetchCamera() {
+            if camera.displayName == DJICameraDisplayNamePhantom4ProCamera ||
+               camera.displayName == DJICameraDisplayNamePhantom4AdvancedCamera ||
+               camera.displayName == DJICameraDisplayNameX4S ||
+               camera.displayName == DJICameraDisplayNameX5S { //Phantom 4 Professional, Phantom 4 Advanced and Inspire 2
+                encoderType = H264EncoderType._H1_Inspire2
+            }
+        }
+        self.renderView = DJIRTPlayerRenderView(decoderType: LiveStreamDecodeType.vtHardware,
+                                                encoderType: encoderType)
+        //TODO: better practice on unwrapping optional properties?
+        guard self.renderView != nil else {
+            return
+        }
+        self.renderView!.frame = self.videoPreviewView.bounds
+        self.videoPreviewView.addSubview(self.renderView!)
+        self.renderView?.isHidden = true
+    }
+    
+    func cleanupRenderViewPlaybacker() {//TODO: how can you set an outlet view to nil? Why do you need to check for nil?
+        self.videoPreviewView.removeFromSuperview()
+        self.videoPreviewView = nil
+        self.renderView = nil
     }
     
     //- (void)cleanupRenderViewPlaybacker
@@ -225,40 +198,51 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     
     func setupVideoPreviewer() {
         print("TODO: setupVideoPreviewer")
+        self.showVideoPreivewView = UIView(frame: self.videoPreviewView.bounds)
+        self.videoPreviewView.addSubview(self.showVideoPreivewView!)
+        DJIVideoPreviewer.instance().type = DJIVideoPreviewerType.autoAdapt
+        DJIVideoPreviewer.instance()?.start()
+        DJIVideoPreviewer.instance()?.reset()
+        DJIVideoPreviewer.instance()?.setView(self.showVideoPreivewView)
+        self.previewerAdapter = VideoPreviewerSDKAdapter.withDefaultSettings()
+        self.previewerAdapter?.start()
+        //TODO: enable hardware decoding for simulator
+        //#if !TARGET_IPHONE_SIMULATOR
+        //    [DJIVideoPreviewer instance].enableHardwareDecode = YES;
+        //#endif
+        
+        self.previewerAdapter?.setupFrameControlHandler()
     }
     
-    //- (void)setupVideoPreviewer
-    //{
-    //    self.showVideoPreivewView = [[UIView alloc] initWithFrame: self.videoPreviewView.bounds];
-    //    [self.videoPreviewView addSubview:self.showVideoPreivewView];
-    //
-    //    [DJIVideoPreviewer instance].type = DJIVideoPreviewerTypeAutoAdapt;
-    //    [[DJIVideoPreviewer instance] start];
-    //    [[DJIVideoPreviewer instance] reset];
-    //    [[DJIVideoPreviewer instance] setView:self.showVideoPreivewView];
-    //    self.previewerAdapter = [VideoPreviewerSDKAdapter adapterWithDefaultSettings];
-    //    [self.previewerAdapter start];
-    //#if !TARGET_IPHONE_SIMULATOR
-    //    [DJIVideoPreviewer instance].enableHardwareDecode = YES;
-    //#endif
-    //    //For Mavic2
-    //    [self.previewerAdapter setupFrameControlHandler];
-    //}
-    //
-    
     func cleanupVideoPreviewer() {
-        print("TODO: cleanupVideoPreviewer")
-        //    if (self.showVideoPreivewView != nil) {
-        //        [self.showVideoPreivewView removeFromSuperview];
-        //        self.showVideoPreivewView = nil;
-        //    }
-        //
-        //    [[DJIVideoPreviewer instance] unSetView];
+        if let showVideoPreviewView = self.showVideoPreivewView {
+            showVideoPreviewView.removeFromSuperview()
+            self.showVideoPreivewView = nil
+        }
+        DJIVideoPreviewer.instance()?.unSetView()
     }
 
 
     func loadMediaList() {
-        
+        self.loadingIndicator.isHidden = false
+        if self.mediaManager?.sdCardFileListState == DJIMediaFileListState.syncing ||
+           self.mediaManager?.sdCardFileListState == DJIMediaFileListState.deleting {
+            print("Media Manager is busy. ")
+        } else {
+            //TODO: use weak self
+            self.mediaManager?.refreshFileList(of: DJICameraStorageLocation.sdCard, withCompletion: { (error:Error?) in
+                //TODO: weak return
+                if let error = error {
+                    print("Fetch Media File List Failed: %@", error.localizedDescription)
+                } else {
+                    print("Fetch Media File List Success.")
+                    if let mediaFileList = self.mediaManager?.sdCardFileListSnapshot() {
+                        self.updateMediaList(mediaList:mediaFileList)
+                    }
+                }
+            })
+            
+        }
     }
 
     //-(void) loadMediaList
@@ -285,115 +269,153 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     //    }
     //}
     //
-    //-(void) updateMediaList:(NSArray*)mediaList
-    //{
-    //    [self.mediaList removeAllObjects];
-    //    [self.mediaList addObjectsFromArray:mediaList];
+    
+    func updateMediaList(mediaList:[DJIMediaFile]) {
+        self.mediaList?.removeAll()
+        self.mediaList?.append(contentsOf: mediaList)
+        
+        if let mediaTaskScheduler = DemoUtility.fetchCamera()?.mediaManager?.taskScheduler {
+            mediaTaskScheduler.suspendAfterSingleFetchTaskFailure = false
+            mediaTaskScheduler.resume(completion: nil)
+            self.mediaList?.forEach({ (file:DJIMediaFile) in
+                if file.thumbnail == nil {
+                    //TODO: take weak self
+                    let task = DJIFetchMediaTask(file: file, content: DJIFetchMediaTaskContent.thumbnail) { (file: DJIMediaFile, content: DJIFetchMediaTaskContent, error: Error?) in
+                        //TODO: weak return
+                        self.mediaTableView.reloadData()
+                    }
+                    mediaTaskScheduler.moveTask(toEnd: task)
+                }
+            })
+        }
+        self.reloadBtn.isEnabled = true
+        self.editBtn.isEnabled = true
+    }
+
+    func showPhotoWithData(data:Data?) {
+        if let data = data {
+            let image = UIImage(data: data)
+            self.displayImageView.image = image
+            self.displayImageView.isHidden = false
+        }
+    }
+    
+    func statusToString(status:DJIMediaVideoPlaybackStatus) -> String? {
+        switch status {
+        case DJIMediaVideoPlaybackStatus.paused:
+            return "Paused"
+        case DJIMediaVideoPlaybackStatus.playing:
+            return "Playing"
+        case DJIMediaVideoPlaybackStatus.stopped:
+            return "Stopped"
+        default:
+            return nil
+        }
+    }
+    
+    func orientationToString(orientation: DJICameraOrientation) -> String? {
+        switch orientation {
+        case DJICameraOrientation.landscape:
+            return "Landscape"
+        case DJICameraOrientation.portrait:
+            return "Portrait"
+        default:
+            return nil
+        }
+    }
+    
+    @objc func dismissStatusAlertView() {
+        self.statusAlertView?.dismissAlertView()
+        self.statusAlertView = nil
+    }
+    
+    // MARK - IBAction Methods
+    
+    
+    @IBAction func backBtnAction(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+
+    
+    @IBAction func editBtnAction(_ sender: Any) {
+        self.mediaTableView.setEditing(true, animated: true)
+        self.cancelBtn.isEnabled = true
+        self.editBtn.isEnabled = false
+    }
+    
+    @IBAction func cancelBtnAction(_ sender: Any) {
+        self.mediaTableView.setEditing(false, animated: true)
+        self.editBtn.isEnabled = true
+        self.cancelBtn.isEnabled = false
+    }
+    
+    @IBAction func reloadBtnAction(_ sender: Any) {
+        self.loadMediaList()
+    }
+
+    @IBAction func statusBtnAction(_ sender: Any) {
+        self.statusView?.isHidden = false
+        self.statusView?.show()
+    }
+    
+    
+    @IBAction func downloadBtnAction(_ sender: Any) {
+        guard self.selectedMedia != nil else {
+            return
+        }
+        let isPhoto = self.selectedMedia?.mediaType == DJIMediaType.JPEG || self.selectedMedia?.mediaType == DJIMediaType.TIFF
+        //TODO: Weak self as target
+        if (self.statusAlertView == nil) {
+            //let message = String(format: "Fetch Media Data \n 0.0")
+            let message = NSString(format: "Fetch Media Data \n 0.0")
+                        
+            /*self.statusAlertView = */AlertView.showAlertWith(message: message, titles: ["Cancel"], action: {(buttonIndex: Int) -> () in
+                //TODO: weak return
+                if (buttonIndex == 0) {
+                    self.selectedMedia?.stopFetchingFileData(completion: { (error: Error?) in
+                        self.statusAlertView = nil
+                    })
+                }
+            })
+        }
+        if let previousOffset = self.previousOffset {
+            self.selectedMedia?.fetchData(withOffset: previousOffset, update: DispatchQueue.main, update: { (data:Data?, isComplete: Bool, error:Error?) in
+                //TODO: weak return self
+                if let error = error {
+                    //TODO: commented in original? why?
+                    print("Download Media Failed:%@",error)
+                    //[target.statusAlertView updateMessage:[[NSString alloc] initWithFormat:@"Download Media Failed:%@",error]];
+                    self.perform(#selector(self.dismissStatusAlertView), with: nil, afterDelay: 2.0)
+                } else {
+                    if isPhoto {
+                        if let data = data {
+                            if self.fileData == nil {
+                                self.fileData = data//TODO: mutable copy?
+                                //                    target.fileData = [data mutableCopy];
+                            } else {
+                                    self.fileData?.append(data)//Again, mutable copy necessary?
+                            }
+                            self.previousOffset = self.previousOffset ?? 0 + UInt(data.count)
+                        }
+                    }
+                    if let selectedFileSizeBytes = self.selectedMedia?.fileSizeInBytes {
+                        let progress = Float(self.previousOffset ?? 0) * 100.0 / Float(selectedFileSizeBytes)
+                        self.statusAlertView?.update(message: String(format: "Downloading: %0.1f%%", progress) as NSString)
+                        if isComplete {
+                            self.dismissStatusAlertView()
+                            if (isPhoto) {
+                                self.showPhotoWithData(data: self.fileData)
+                                self.showPhotoWithData(data: self.fileData)
+                            }
+                        }
+                    }
+                }
+            })
+        }
+    }
+    
     //
-    //    DJIFetchMediaTaskScheduler *mediaTaskScheduler = [DemoUtility fetchCamera].mediaManager.taskScheduler;
-    //    mediaTaskScheduler.suspendAfterSingleFetchTaskFailure = NO;
-    //    [mediaTaskScheduler resumeWithCompletion:nil];
-    //    for (DJIMediaFile *file in self.mediaList) {
-    //        if (file.thumbnail == nil) {
-    //            WeakRef(target);
-    //            DJIFetchMediaTask *task = [DJIFetchMediaTask taskWithFile:file content:DJIFetchMediaTaskContentThumbnail andCompletion:^(DJIMediaFile * _Nullable file, DJIFetchMediaTaskContent content, NSError * _Nullable error) {
-    //                WeakReturn(target);
-    //                [target.mediaTableView reloadData];
-    //            }];
-    //            [mediaTaskScheduler moveTaskToEnd:task];
-    //        }
-    //    }
-    //
-    //    [self.reloadBtn setEnabled:YES];
-    //    [self.editBtn setEnabled:YES];
-    //}
-    //
-    //-(void) showPhotoWithData:(NSData*)data
-    //{
-    //    if (data) {
-    //        UIImage* image = [UIImage imageWithData:data];
-    //        if (image) {
-    //            [self.displayImageView setImage:image];
-    //            [self.displayImageView setHidden:NO];
-    //        }
-    //    }
-    //}
-    //
-    //-(NSString *)statusToString:(DJIMediaVideoPlaybackStatus)status {
-    //    switch (status) {
-    //        case DJIMediaVideoPlaybackStatusPaused:
-    //            return @"Paused";
-    //        case DJIMediaVideoPlaybackStatusPlaying:
-    //            return @"Playing";
-    //        case DJIMediaVideoPlaybackStatusStopped:
-    //            return @"Stopped";
-    //        default:
-    //            break;
-    //    }
-    //    return nil;
-    //}
-    //
-    //-(NSString *)orientationToString:(DJICameraOrientation)orientation {
-    //    switch (orientation) {
-    //        case DJICameraOrientationLandscape:
-    //            return @"Landscape";
-    //        case DJICameraOrientationPortrait:
-    //            return @"Portrait";
-    //        default:
-    //            break;
-    //    }
-    //    return nil;
-    //}
-    //
-    //-(void) dismissStatusAlertView
-    //{
-    //    [self.statusAlertView dismissAlertView];
-    //    self.statusAlertView = nil;
-    //}
-    //
-    //#pragma mark - IBAction Methods
-    //- (IBAction)backBtnAction:(id)sender {
-    //    [self.navigationController popViewControllerAnimated:YES];
-    //}
-    //
-    //- (IBAction)editBtnAction:(id)sender {
-    //    [self.mediaTableView setEditing:YES animated:YES];
-    //    [self.deleteBtn setEnabled:YES];
-    //    [self.cancelBtn setEnabled:YES];
-    //    [self.editBtn setEnabled:NO];
-    //}
-    //
-    //- (IBAction)cancelBtnAction:(id)sender {
-    //    [self.mediaTableView setEditing:NO animated:YES];
-    //    [self.editBtn setEnabled:YES];
-    //    [self.deleteBtn setEnabled:NO];
-    //    [self.cancelBtn setEnabled:NO];
-    //}
-    //
-    //- (IBAction)reloadBtnAction:(id)sender {
-    //    [self loadMediaList];
-    //}
-    //
-    //- (IBAction)statusBtnAction:(id)sender {
-    //    [self.statusView setHidden:NO];
-    //    [self.statusView show];
-    //}
-    //
-    //- (IBAction)downloadBtnAction:(id)sender {
-    //
-    //    BOOL isPhoto = self.selectedMedia.mediaType == DJIMediaTypeJPEG || self.selectedMedia.mediaType == DJIMediaTypeTIFF;
-    //    WeakRef(target);
-    //    if (self.statusAlertView == nil) {
-    //        NSString* message = [NSString stringWithFormat:@"Fetch Media Data \n 0.0"];
-    ////        self.statusAlertView = [AlertView showAlertViewWithMessage:message titles:@[@"Cancel"] action:^(NSUInteger buttonIndex) {
-    ////            WeakReturn(target);
-    ////            if (buttonIndex == 0) {
-    ////                [target.selectedMedia stopFetchingFileDataWithCompletion:^(NSError * _Nullable error) {
-    ////                    target.statusAlertView = nil;
-    ////                }];
-    ////            }
-    ////        }];
-    //    }
+
     //
     //    [self.selectedMedia fetchFileDataWithOffset:self.previousOffset updateQueue:dispatch_get_main_queue() updateBlock:^(NSData * _Nullable data, BOOL isComplete, NSError * _Nullable error) {
     //        WeakReturn(target);

@@ -159,7 +159,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="backBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="tki-pu-eht"/>
+                                    <action selector="backBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="cnt-QZ-FR5"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yvy-Cu-6h0">
@@ -178,7 +178,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="editBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="ys1-oF-iUM"/>
+                                    <action selector="editBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="WTH-UD-MCg"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fws-j1-g9b">
@@ -317,7 +317,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="cancelBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="rSh-p2-XDm"/>
+                                    <action selector="cancelBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="gup-oM-W3E"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7s3-p4-edU">
@@ -335,7 +335,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="reloadBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="9Ci-xb-9fW"/>
+                                    <action selector="reloadBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="EdP-4Y-5hO"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xsl-CZ-VQN">
@@ -354,7 +354,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="downloadBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="8T0-vf-Y3K"/>
+                                    <action selector="downloadBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="o1L-is-RSt"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UTV-Yt-9AA">
@@ -371,7 +371,7 @@
                                 </state>
                                 <connections>
                                     <action selector="showStatusBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="Kn3-eJ-qPc"/>
-                                    <action selector="statusBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="fRk-f2-EdV"/>
+                                    <action selector="statusBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="haM-7t-AaH"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tvc-B9-pBm">
