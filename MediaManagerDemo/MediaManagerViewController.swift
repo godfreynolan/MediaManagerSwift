@@ -52,7 +52,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TEST", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "mediaFileCell", for: indexPath)
         print("TODO")
         return cell
     }

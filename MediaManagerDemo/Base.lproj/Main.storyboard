@@ -135,7 +135,7 @@
         <!--Media Manager View Controller-->
         <scene sceneID="mhN-AG-Kae">
             <objects>
-                <viewController id="egb-Yz-hmW" customClass="MediaManagerViewController" sceneMemberID="viewController">
+                <viewController id="egb-Yz-hmW" customClass="MediaManagerViewController" customModule="MediaManagerDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ik9-mz-RxM"/>
                         <viewControllerLayoutGuide type="bottom" id="XH6-MP-96D"/>
