@@ -41,19 +41,41 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     //@property (nonatomic) DJIScrollView *statusView;
     var statusView : DJIScrollView?
     //@property (nonatomic, strong) NSIndexPath *selectedCellIndexPath;
+    var selectedCellIndexPath : IndexPath?
     //@property (nonatomic, strong) DJIRTPlayerRenderView *renderView;
     var renderView : DJIRTPlayerRenderView?
 
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("TODO")
-        return 1
+        return self.mediaList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "mediaFileCell", for: indexPath)
-        print("TODO")
+        
+//        if cell == nil {//TODO: necessary? not an optional type...
+//            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"mediaFileCell"];
+//        }
+        if let selectedCellIndexPath = self.selectedCellIndexPath {
+            if selectedCellIndexPath == indexPath {
+                cell.accessoryType = UITableViewCell.AccessoryType.checkmark
+            } else {
+                cell.accessoryType = UITableViewCell.AccessoryType.none
+            }
+        }
+        
+        if let media = self.mediaList?[indexPath.row] {
+            cell.textLabel?.text = media.fileName;
+            cell.detailTextLabel?.text = String(format: "Create Date: %@ Size: %0.1fMB Duration:%f cusotmInfo:%@", media.timeCreated, Double(media.fileSizeInBytes) / 1024.0 / 1024.0,media.durationInSeconds, media.customInformation ?? "none")
+            
+            if let thumbnail = media.thumbnail {
+                cell.imageView?.image = thumbnail
+            } else {
+                cell.imageView?.image = UIImage.init(named: "dji.png")
+            }
+        }
+        
         return cell
     }
     
