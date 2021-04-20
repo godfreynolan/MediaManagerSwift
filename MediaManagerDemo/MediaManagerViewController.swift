@@ -248,46 +248,19 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
            self.mediaManager?.sdCardFileListState == DJIMediaFileListState.deleting {
             print("Media Manager is busy. ")
         } else {
-            //TODO: use weak self
-            self.mediaManager?.refreshFileList(of: DJICameraStorageLocation.sdCard, withCompletion: { (error:Error?) in
-                //TODO: weak return
+            self.mediaManager?.refreshFileList(of: DJICameraStorageLocation.sdCard, withCompletion: {[weak self] (error:Error?) in
                 if let error = error {
                     print("Fetch Media File List Failed: %@", error.localizedDescription)
                 } else {
                     print("Fetch Media File List Success.")
-                    if let mediaFileList = self.mediaManager?.sdCardFileListSnapshot() {
-                        self.updateMediaList(mediaList:mediaFileList)
+                    if let mediaFileList = self?.mediaManager?.sdCardFileListSnapshot() {
+                        self?.updateMediaList(mediaList:mediaFileList)
                     }
                 }
             })
             
         }
     }
-
-    //-(void) loadMediaList
-    //{
-    //    [self.loadingIndicator setHidden:NO];
-    //    if (self.mediaManager.sdCardFileListState == DJIMediaFileListStateSyncing ||
-    //             self.mediaManager.sdCardFileListState == DJIMediaFileListStateDeleting) {
-    //        NSLog(@"Media Manager is busy. ");
-    //    }else {
-    //        WeakRef(target);
-    //        [self.mediaManager refreshFileListOfStorageLocation:DJICameraStorageLocationSDCard withCompletion:^(NSError * _Nullable error) {
-    //            WeakReturn(target);
-    //            if (error) {
-    //                //ShowResult(@"Fetch Media File List Failed: %@", error.localizedDescription);
-    //            }
-    //            else {
-    //                NSLog(@"Fetch Media File List Success.");
-    //                NSArray *mediaFileList = [target.mediaManager sdCardFileListSnapshot];
-    //                [target updateMediaList:mediaFileList];
-    //            }
-    //            [target.loadingIndicator setHidden:YES];
-    //        }];
-    //
-    //    }
-    //}
-    //
     
     func updateMediaList(mediaList:[DJIMediaFile]) {
         self.mediaList?.removeAll()
@@ -298,10 +271,8 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
             mediaTaskScheduler.resume(completion: nil)
             self.mediaList?.forEach({ (file:DJIMediaFile) in
                 if file.thumbnail == nil {
-                    //TODO: take weak self
-                    let task = DJIFetchMediaTask(file: file, content: DJIFetchMediaTaskContent.thumbnail) { (file: DJIMediaFile, content: DJIFetchMediaTaskContent, error: Error?) in
-                        //TODO: weak return
-                        self.mediaTableView.reloadData()
+                    let task = DJIFetchMediaTask(file: file, content: DJIFetchMediaTaskContent.thumbnail) {[weak self] (file: DJIMediaFile, content: DJIFetchMediaTaskContent, error: Error?) in
+                        self?.mediaTableView.reloadData()
                     }
                     mediaTaskScheduler.moveTask(toEnd: task)
                 }
@@ -383,48 +354,46 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
             return
         }
         let isPhoto = self.selectedMedia?.mediaType == DJIMediaType.JPEG || self.selectedMedia?.mediaType == DJIMediaType.TIFF
-        //TODO: Weak self as target
         if (self.statusAlertView == nil) {
-            //let message = String(format: "Fetch Media Data \n 0.0")
-            let message = NSString(format: "Fetch Media Data \n 0.0")
+            let message = String(format: "Fetch Media Data \n 0.0")
                         
-            /*self.statusAlertView = */AlertView.showAlertWith(message: message, titles: ["Cancel"], action: {(buttonIndex: Int) -> () in
-                //TODO: weak return
+            self.statusAlertView = AlertView.showAlertWith(message: message, titles: ["Cancel"], action: {[weak self] (buttonIndex: Int) -> () in
                 if (buttonIndex == 0) {
-                    self.selectedMedia?.stopFetchingFileData(completion: { (error: Error?) in
-                        self.statusAlertView = nil
+                    self?.selectedMedia?.stopFetchingFileData(completion: {[weak self] (error: Error?) in
+                        self?.statusAlertView = nil
                     })
                 }
             })
         }
         if let previousOffset = self.previousOffset {
-            self.selectedMedia?.fetchData(withOffset: previousOffset, update: DispatchQueue.main, update: { (data:Data?, isComplete: Bool, error:Error?) in
-                //TODO: weak return self
+            self.selectedMedia?.fetchData(withOffset: previousOffset, update: DispatchQueue.main, update: {[weak self] (data:Data?, isComplete: Bool, error:Error?) in
                 if let error = error {
                     //TODO: commented in original? why?
                     print("Download Media Failed:%@",error)
                     //[target.statusAlertView updateMessage:[[NSString alloc] initWithFormat:@"Download Media Failed:%@",error]];
-                    self.perform(#selector(self.dismissStatusAlertView), with: nil, afterDelay: 2.0)
+                    if let unwrappedSelf = self {
+                        unwrappedSelf.perform(#selector(unwrappedSelf.dismissStatusAlertView), with: nil, afterDelay: 2.0)
+                    }
                 } else {
                     if isPhoto {
                         if let data = data {
-                            if self.fileData == nil {
-                                self.fileData = data//TODO: mutable copy?
+                            if self?.fileData == nil {
+                                self?.fileData = data//TODO: mutable copy?
                                 //                    target.fileData = [data mutableCopy];
                             } else {
-                                    self.fileData?.append(data)//Again, mutable copy necessary?
+                                self?.fileData?.append(data)//Again, mutable copy necessary?
                             }
-                            self.previousOffset = self.previousOffset ?? 0 + UInt(data.count)
+                            self?.previousOffset = self?.previousOffset ?? 0 + UInt(data.count)
                         }
                     }
-                    if let selectedFileSizeBytes = self.selectedMedia?.fileSizeInBytes {
-                        let progress = Float(self.previousOffset ?? 0) * 100.0 / Float(selectedFileSizeBytes)
-                        self.statusAlertView?.update(message: String(format: "Downloading: %0.1f%%", progress) as NSString)
+                    if let selectedFileSizeBytes = self?.selectedMedia?.fileSizeInBytes {
+                        let progress = Float(self?.previousOffset ?? 0) * 100.0 / Float(selectedFileSizeBytes)
+                        self?.statusAlertView?.update(message: String(format: "Downloading: %0.1f%%", progress) as NSString)
                         if isComplete {
-                            self.dismissStatusAlertView()
+                            self?.dismissStatusAlertView()
                             if (isPhoto) {
-                                self.showPhotoWithData(data: self.fileData)
-                                self.showPhotoWithData(data: self.fileData)
+                                self?.showPhotoWithData(data: self?.fileData)
+                                self?.showPhotoWithData(data: self?.fileData)
                             }
                         }
                     }
@@ -433,7 +402,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         }
     }
     
-    //
+    //From downloadBtnAction...
 
     //
     //    [self.selectedMedia fetchFileDataWithOffset:self.previousOffset updateQueue:dispatch_get_main_queue() updateBlock:^(NSData * _Nullable data, BOOL isComplete, NSError * _Nullable error) {
@@ -466,45 +435,51 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     //    }];
     //}
     //
-    //- (IBAction)playBtnAction:(id)sender {
-    //
-    //    [self.displayImageView setHidden:YES];
-    //    [self.renderView setHidden:NO];
-    //
-    //    if ((self.selectedMedia.mediaType == DJIMediaTypeMOV) || (self.selectedMedia.mediaType == DJIMediaTypeMP4)) {
-    //        [self.positionTextField setPlaceholder:[NSString stringWithFormat:@"%d sec", (int)self.selectedMedia.durationInSeconds]];
-    //        [self.mediaManager playVideo:self.selectedMedia withCompletion:^(NSError * _Nullable error) {
-    //            if (error) {
-    //                //ShowResult(@"Play Video Failed: %@", error.description);
-    //            }
-    //        }];
-    //    }
-    //}
-    //
-    //- (IBAction)resumeBtnAction:(id)sender {
-    //
-    //    [self.mediaManager resumeWithCompletion:^(NSError * _Nullable error) {
-    //        if (error) {
-    //            //ShowResult(@"Resume failed: %@", error.description);
-    //        }
-    //    }];
-    //}
-    //
-    //- (IBAction)pauseBtnAction:(id)sender {
-    //    [self.mediaManager pauseWithCompletion:^(NSError * _Nullable error) {
-    //        if (error) {
-    //            //ShowResult(@"Pause failed: %@", error.description);
-    //        }
-    //    }];
-    //}
-    //
-    //- (IBAction)stopBtnAction:(id)sender {
-    //    [self.mediaManager stopWithCompletion:^(NSError * _Nullable error) {
-    //        if (error) {
-    //            //ShowResult(@"Stop failed: %@", error.description);
-    //        }
-    //    }];
-    //}
+    
+    @IBAction func playBtnAction(_ sender: Any) {
+        self.displayImageView.isHidden = true
+        self.renderView?.isHidden = false
+        
+        if let mediaType = self.selectedMedia?.mediaType {
+            if (mediaType == DJIMediaType.MOV || mediaType == DJIMediaType.MP4) {
+                if let selectedMedia = self.selectedMedia {
+                    self.positionTextField.placeholder = String(format: "%d sec", Int(selectedMedia.durationInSeconds))
+                    self.mediaManager?.playVideo(selectedMedia, withCompletion: { (error:Error?) in
+                        if let error = error {
+                            DemoUtility.show(result: String(format:"Play Video Failed: %@", error.localizedDescription) as NSString)//TODO: use String, convert DemoUtility function to swift
+                        }
+                    })
+                }
+            }
+        }
+    }
+    
+    @IBAction func resumeBtnAction(_ sender: Any) {
+        self.mediaManager?.resume(completion: { (error:Error?) in
+            if let error = error {
+                DemoUtility.show(result: String(format: "Resume failed: %@", error.localizedDescription) as NSString)
+            }
+        })
+    }
+    
+    @IBAction func pauseBtnAction(_ sender: Any) {
+        self.mediaManager?.pause(completion: { (error:Error?) in
+            if let error = error {
+                DemoUtility.show(result: String(format: "Pause failed: %@", error.localizedDescription) as NSString)
+            }
+        })
+    }
+    
+    @IBAction func stopBtnAction(_ sender: Any) {
+        self.mediaManager?.stop(completion: { (error: Error?) in
+            if let error = error {
+                DemoUtility.show(result: String(format:"Stop failed: %@", error.localizedDescription) as NSString)
+            }
+        })
+    }
+    
+    
+    //TODO: where's this action coming from? DJIScrollView.nib?
     //
     //- (IBAction)moveToPositionAction:(id)sender {
     //    NSUInteger second = 0;
@@ -523,82 +498,83 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     //
     //}
     //
-    //- (IBAction)showStatusBtnAction:(id)sender {
-    //    [self.statusView setHidden:NO];
-    //    [self.statusView show];
-    //}
+    
+    @IBAction func showStatusBtnAction(_ sender: Any) {
+        self.statusView?.isHidden = false
+        self.statusView?.show()
+    }
+
+    //MARK - Save Download Images
+    
+    func savePhotoWithData(data:NSData?) {
+        if let data = data {
+            let tmpDir = NSTemporaryDirectory() as NSString //TODO: how to do this with String?
+            let tmpImageFilePath = tmpDir.appendingPathComponent("tmpimage.jpg")
+            data.write(toFile: tmpImageFilePath, atomically: true)
+            
+            guard let imageURL = URL(string: tmpImageFilePath) else {
+                print("Failed to load a filepath to save to")
+                return
+            }
+            PHPhotoLibrary.shared().performChanges {
+                //__unused PHAssetChangeRequest *req = [PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:imageURL];
+                _ = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: imageURL)
+            } completionHandler: { (success:Bool, error: Error?) in
+                print("success = %d, error = %@", success, error?.localizedDescription ?? "no")
+            }
+        }
+    }
+    
+    func imageDidFinishSaving(error:NSError?, contextInfo:Any) {// void* = Any? Data?
+        var message = ""
+        if let error = error {
+            //Show message when save image failed
+            message = String(format:"Save Image Failed! Error: %@", error.description);
+        } else {
+            //Show message when save image successfully
+            message = "Saved to Photo Album";
+        }
+
+        if self.statusAlertView == nil {
+            self.statusAlertView = AlertView.showAlertWith(message:message, titles:["Dismiss"], action: {[weak self] (buttonIndex:Int) in
+                if buttonIndex == 0 {
+                    self?.dismissStatusAlertView()
+                }
+            })
+        }
+    }
+
+    //MARK - DJIMediaManagerDelegate Method
+    
+    func manager(_ manager: DJIMediaManager, didUpdate state: DJIMediaVideoPlaybackState) {
+        var stateString = ""
+        if state.playingMedia == nil {//TODO: should state be an optional?
+            stateString.append("No media \n")
+        } else {
+            stateString.append(String(format:"media: %@\n", state.playingMedia.fileName))
+            stateString.append(String(format:"Total: %f\n", state.playingMedia.durationInSeconds))
+            stateString.append(String(format:"Orientation: %@\n", self.orientationToString(orientation: state.playingMedia.videoOrientation) ?? "nil"))
+        }
+        stateString.append(String(format:"Status: %@\n", self.statusToString(status:state.playbackStatus) ?? "nil"))
+        stateString.append(String(format:"Position: %f\n", state.playingPosition))
+    
+        self.statusView?.write(status: stateString as NSString)//TODO: use String
+    }
+    
+    func manager(_ manager: DJIMediaManager, didUpdateVideoPlaybackData data: UnsafeMutablePointer<UInt8>, length: Int, forRendering: Bool) {
+        //    [self.renderView decodeH264CompleteFrameData:data
+        //                                      length:length
+        //                                  decodeOnly:!forRendering];
+        self.renderView?.decodeH264RawData(data, length: UInt(length))
+    }
+
+    //MARK - Table view data source
     //
-    //#pragma mark Save Download Images
-    //-(void) savePhotoWithData:(NSData*)data
-    //{
-    //    if (data) {
-    //        NSString *tmpDir =  NSTemporaryDirectory();
-    //        NSString *tmpImageFilePath = [tmpDir stringByAppendingPathComponent:@"tmpimage.jpg"];
-    //        [data writeToFile:tmpImageFilePath atomically:YES];
-    //
-    //        NSURL *imageURL = [NSURL URLWithString:tmpImageFilePath];
-    //        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-    //            __unused PHAssetChangeRequest *req = [PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:imageURL];
-    //        } completionHandler:^(BOOL success, NSError * _Nullable error) {
-    //            NSLog(@"success = %d, error = %@", success, error);
-    //        }];
-    //    }
-    //}
-    //
-    //- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
-    //{
-    //    NSString* message = @"";
-    //    if (error != NULL)
-    //    {
-    //        //Show message when save image failed
-    //        message = [NSString stringWithFormat:@"Save Image Failed! Error: %@", error];
-    //    }
-    //    else
-    //    {
-    //        //Show message when save image successfully
-    //        message = [NSString stringWithFormat:@"Saved to Photo Album"];
-    //    }
-    //
-    //    WeakRef(target);
-    //    if (self.statusAlertView == nil) {
-    ////        self.statusAlertView = [AlertView showAlertViewWithMessage:message titles:@[@"Dismiss"] action:^(NSUInteger buttonIndex) {
-    ////            WeakReturn(target);
-    ////            if (buttonIndex == 0) {
-    ////                [target dismissStatusAlertView];
-    ////            }
-    ////        }];
-    //    }
-    //}
-    //
-    //#pragma mark - DJIMediaManagerDelegate Method
-    //
-    //- (void)manager:(DJIMediaManager *)manager didUpdateVideoPlaybackState:(DJIMediaVideoPlaybackState *)state {
-    //    NSMutableString *stateStr = [NSMutableString string];
-    //    if (state.playingMedia == nil) {
-    //        [stateStr appendString:@"No media\n"];
-    //    }
-    //    else {
-    //        [stateStr appendFormat:@"media: %@\n", state.playingMedia.fileName];
-    //        [stateStr appendFormat:@"Total: %f\n", state.playingMedia.durationInSeconds];
-    //        [stateStr appendFormat:@"Orientation: %@\n", [self orientationToString:state.playingMedia.videoOrientation]];
-    //    }
-    //    [stateStr appendFormat:@"Status: %@\n", [self statusToString:state.playbackStatus]];
-    //    [stateStr appendFormat:@"Position: %f\n", state.playingPosition];
-    //
-    //    [self.statusView writeWithStatus:stateStr];
-    //}
-    //
-    //-(void)manager:(DJIMediaManager *)manager didUpdateVideoPlaybackData:(uint8_t *)data length:(size_t)length forRendering:(BOOL)forRendering {
-    //    [self.renderView decodeH264CompleteFrameData:data
-    //                                      length:length
-    //                                  decodeOnly:!forRendering];
-    //}
-    //
-    //#pragma mark - Table view data source
-    //
-    //- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    //    return 1;
-    //}
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    
     //
     //- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     //

@@ -14,8 +14,9 @@ import UIKit
 
 class AlertView: NSObject {
     //TODO: can pass block from objc to swift?
-    public class func showAlertWith(message:NSString, titles:[NSString]?, action:(Int)->()?) {
+    public class func showAlertWith(message:String, titles:[NSString]?, action:((Int)->())?) -> AlertView {
         print("TODO: showAlertWith")
+        return AlertView()
     }
     
     public class func showAlertWith(message:NSString, titles:[NSString]?, textFields:[NSString], action:[(Int)->()]?) {

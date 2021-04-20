@@ -10,7 +10,7 @@ import DJIUXSDK
 import DJISDK
 
 class DemoUtility: NSObject {
-    @objc public class func show(result:NSString) {
+    @objc public class func show(result:NSString) {//TODO: convert to string once no ObjC class uses this. Also should I make this a global function like the objc original?
         DispatchQueue.main.async {
             let alertViewController = UIAlertController(title: nil, message: result as String, preferredStyle: UIAlertController.Style.alert)
             let okAction = UIAlertAction.init(title: "OK", style: UIAlertAction.Style.default, handler: nil)

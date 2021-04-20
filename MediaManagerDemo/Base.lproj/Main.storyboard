@@ -196,7 +196,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="playBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="5cp-it-PXS"/>
+                                    <action selector="playBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="tTx-IV-hjb"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yzF-XN-6PV">
@@ -215,7 +215,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="pauseBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="k36-E8-sad"/>
+                                    <action selector="pauseBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="w3t-Nf-EBd"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O9w-mi-gSB">
@@ -233,7 +233,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="stopBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="jNT-nn-Fxg"/>
+                                    <action selector="stopBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="0wT-SS-kyN"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bns-N3-djo">
@@ -370,7 +370,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="showStatusBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="Kn3-eJ-qPc"/>
+                                    <action selector="showStatusBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="ghB-19-eaD"/>
                                     <action selector="statusBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="haM-7t-AaH"/>
                                 </connections>
                             </button>
@@ -390,7 +390,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="resumeBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="tMl-9c-28M"/>
+                                    <action selector="resumeBtnAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="EQq-20-vOu"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ITp-Ih-Waf">
