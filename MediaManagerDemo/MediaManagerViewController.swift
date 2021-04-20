@@ -284,8 +284,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
 
     func showPhotoWithData(data:Data?) {
         if let data = data {
-            let image = UIImage(data: data)
-            self.displayImageView.image = image
+            self.displayImageView.image = UIImage(data: data)
             self.displayImageView.isHidden = false
         }
     }
@@ -573,83 +572,73 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+
     
+    func tableView(tableView: UITableView, numberOfRowsInSection: Int) -> Int {
+        return self.mediaList?.count ?? 0
+    }
     
-    //
-    //- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    //
-    //    return self.mediaList.count;
-    //}
-    //
-    //- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //
-    //    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mediaFileCell"];
-    //    if (cell == nil) {
-    //        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"mediaFileCell"];
-    //    }
-    //
-    //    if (self.selectedCellIndexPath == indexPath) {
-    //        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    //    }else
-    //    {
-    //        cell.accessoryType = UITableViewCellAccessoryNone;
-    //    }
-    //
-    //    DJIMediaFile * media = [self.mediaList objectAtIndex:indexPath.row];
-    //    cell.textLabel.text = media.fileName;
-    //    cell.detailTextLabel.text = [NSString stringWithFormat:@"Create Date: %@ Size: %0.1fMB Duration:%f cusotmInfo:%@", media.timeCreated, media.fileSizeInBytes / 1024.0 / 1024.0,media.durationInSeconds, media.customInformation];
-    //    if (media.thumbnail == nil) {
-    //        [cell.imageView setImage:[UIImage imageNamed:@"dji.png"]];
-    //    }
-    //    else
-    //    {
-    //        [cell.imageView setImage:media.thumbnail];
-    //    }
-    //
-    //    return cell;
-    //
-    //}
-    //
-    //- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    //
-    //    if (self.mediaTableView.isEditing) {
-    //        return;
-    //    }
-    //
-    //    self.selectedCellIndexPath = indexPath;
-    //
-    //    DJIMediaFile *currentMedia = [self.mediaList objectAtIndex:indexPath.row];
-    //    if (![currentMedia isEqual:self.selectedMedia]) {
-    //        self.previousOffset = 0;
-    //        self.selectedMedia = currentMedia;
-    //        self.fileData = nil;
-    //    }
-    //
-    //    [tableView reloadData];
-    //}
-    //
-    //-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-    //{
-    //    return YES;
-    //}
-    //
-    //-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    //    DJIMediaFile* currentMedia = [self.mediaList objectAtIndex:indexPath.row];
-    //    [self.mediaManager deleteFiles:@[currentMedia] withCompletion:^(NSArray<DJIMediaFile *> * _Nonnull failedFiles, NSError * _Nullable error) {
-    //        if (error) {
-    //            //ShowResult(@"Delete File Failed:%@",error.description);
-    //            for (DJIMediaFile * media in failedFiles) {
-    //                NSLog(@"%@ delete failed",media.fileName);
-    //            }
-    //        }else
-    //        {
-    //            //ShowResult(@"Delete File Successfully");
-    //            [self.mediaList removeObjectAtIndex:indexPath.row];
-    //            [self.mediaTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-    //        }
-    //
-    //    }];
-    //}
-    //
-    //@end
+    //TODO: should all delegate functions be private? should I be going through making methods private if possible?
+    private func tableView(tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "mediaFileCell") ??
+            UITableViewCell.init(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "mediaFileCell")
+        
+        if self.selectedCellIndexPath == indexPath {
+            cell.accessoryType = UITableViewCell.AccessoryType.checkmark
+        } else {
+            cell.accessoryType = UITableViewCell.AccessoryType.none
+        }
+        
+        if let media = self.mediaList?[indexPath.row] {
+            cell.textLabel?.text = media.fileName
+            cell.detailTextLabel?.text = String(format: "Create Date: %@ Size: %0.1fMB Duration:%f cusotmInfo:%@", media.timeCreated, Double(media.fileSizeInBytes) / 1024.0 / 1024.0,media.durationInSeconds, media.customInformation ?? "none")
+            if let thumbnail = media.thumbnail {
+                cell.imageView?.image = thumbnail
+            } else {
+                cell.imageView?.image = UIImage(named: "dji.png")
+            }
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if self.mediaTableView.isEditing {
+            return
+        }
+        
+        self.selectedCellIndexPath = indexPath
+        
+        if let currentMedia = self.mediaList?[indexPath.row] {
+            if currentMedia !== self.selectedMedia {
+                self.previousOffset = 0
+                self.selectedMedia = currentMedia
+                self.fileData = nil
+            }
+        }
+        tableView.reloadData()
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if let currentMedia = self.mediaList?[indexPath.row] {
+            self.mediaManager?.delete([currentMedia], withCompletion: { (failedFiles: [DJIMediaFile], error: Error?) in
+                if let error = error {
+                    DemoUtility.show(result: String(format:"Delete File Failed:%@",error.localizedDescription) as NSString)//convert to String...
+                    for media:DJIMediaFile in failedFiles {
+                        print("%@ delete failed",media.fileName)
+                    }
+                } else {
+                    //ShowResult(@"Delete File Successfully");
+                    DemoUtility.show(result: "Delete File Successfully")
+                    //[self.mediaList removeObjectAtIndex:indexPath.row];
+                    self.mediaList?.remove(at: indexPath.row)
+                    //[self.mediaTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+                    self.mediaTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
+                }
+            })
+        }
+    }
 }
