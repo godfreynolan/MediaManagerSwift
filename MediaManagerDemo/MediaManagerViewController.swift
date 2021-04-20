@@ -25,11 +25,8 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     var previewerAdapter: VideoPreviewerSDKAdapter?
     
     weak var mediaManager : DJIMediaManager?
-    var mediaList : [DJIMediaFile]?
     //@property(nonatomic, strong) NSMutableArray* mediaList;
-
-    //TODO: need these?
-    
+    var mediaList : [DJIMediaFile]?
     //@property(nonatomic, strong) AlertView *statusAlertView;
     var statusAlertView : AlertView?
     //@property(nonatomic) DJIMediaFile *selectedMedia;

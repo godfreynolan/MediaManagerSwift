@@ -55,10 +55,10 @@
 		3A805F9826273AA200B3899B /* DemoUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoUtility.swift; sourceTree = "<group>"; };
 		3A805F9A26273B7700B3899B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A805FA826273FF900B3899B /* DemoComponentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoComponentHelper.swift; sourceTree = "<group>"; };
-		3A805FB226274CEC00B3899B /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlertView.swift; path = ../../../../../../AlertView.swift; sourceTree = "<group>"; };
-		3A805FB426275C9C00B3899B /* DefaultLayoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DefaultLayoutViewController.swift; path = ../../../../../DefaultLayoutViewController.swift; sourceTree = "<group>"; };
-		3A805FBA2627626100B3899B /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = ../../../../../MainViewController.swift; sourceTree = "<group>"; };
-		3A805FC826276DB600B3899B /* DJIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DJIScrollView.swift; path = ../../../../../../DJIScrollView.swift; sourceTree = "<group>"; };
+		3A805FB226274CEC00B3899B /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		3A805FB426275C9C00B3899B /* DefaultLayoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLayoutViewController.swift; sourceTree = "<group>"; };
+		3A805FBA2627626100B3899B /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		3A805FC826276DB600B3899B /* DJIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJIScrollView.swift; sourceTree = "<group>"; };
 		A41CA8B31F39962B0087BE43 /* DemoUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoUtility.h; sourceTree = "<group>"; };
 		A41CA8B51F39962B0087BE43 /* DJIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIAlertView.h; sourceTree = "<group>"; };
 		A41CA8B61F39962B0087BE43 /* DJIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJIAlertView.m; sourceTree = "<group>"; };
