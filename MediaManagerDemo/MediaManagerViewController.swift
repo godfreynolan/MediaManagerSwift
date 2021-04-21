@@ -223,7 +223,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         DJIVideoPreviewer.instance()?.start()
         DJIVideoPreviewer.instance()?.reset()
         DJIVideoPreviewer.instance()?.setView(self.showVideoPreivewView)
-        self.previewerAdapter = VideoPreviewerSDKAdapter.withDefaultSettings()
+        self.previewerAdapter = VideoPreviewerSDKAdapter.adapterWithDefaultSettings()
         self.previewerAdapter?.start()
         //TODO: enable hardware decoding for simulator
         //#if !TARGET_IPHONE_SIMULATOR

@@ -11,6 +11,7 @@
 #define DJIDecodeImageCalibrateControlLogic_h
 
 #import <DJIWidget/DJIImageCalibrateFilterDataSource.h>
+#import <DJIWidget/DJIImageCalibrateHelper.h>
 
 
 @interface DJIDecodeImageCalibrateControlLogic : NSObject <DJIImageCalibrateDelegate>
