@@ -355,8 +355,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         let isPhoto = self.selectedMedia?.mediaType == DJIMediaType.JPEG || self.selectedMedia?.mediaType == DJIMediaType.TIFF
         if (self.statusAlertView == nil) {
             let message = String(format: "Fetch Media Data \n 0.0")
-                        
-            self.statusAlertView = AlertView.showAlertWith(message: message, titles: ["Cancel"], action: {[weak self] (buttonIndex: Int) -> () in
+            self.statusAlertView = AlertView.showAlertWith(message: message, titles: ["Cancel"], actionClosure:{[weak self] (buttonIndex: Int) -> () in
                 if (buttonIndex == 0) {
                     self?.selectedMedia?.stopFetchingFileData(completion: {[weak self] (error: Error?) in
                         self?.statusAlertView = nil
@@ -382,17 +381,19 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
                             } else {
                                 self?.fileData?.append(data)//Again, mutable copy necessary?
                             }
-                            self?.previousOffset = self?.previousOffset ?? 0 + UInt(data.count)
                         }
+                    }
+                    if let data = data {
+                        self?.previousOffset = self?.previousOffset ?? 0 + UInt(data.count)
                     }
                     if let selectedFileSizeBytes = self?.selectedMedia?.fileSizeInBytes {
                         let progress = Float(self?.previousOffset ?? 0) * 100.0 / Float(selectedFileSizeBytes)
-                        self?.statusAlertView?.update(message: String(format: "Downloading: %0.1f%%", progress) as NSString)
+                        self?.statusAlertView?.update(message: String(format: "Downloading: %0.1f%%", progress))
                         if isComplete {
                             self?.dismissStatusAlertView()
                             if (isPhoto) {
                                 self?.showPhotoWithData(data: self?.fileData)
-                                self?.showPhotoWithData(data: self?.fileData)
+                                self?.savePhotoWithData(data: self?.fileData)
                             }
                         }
                     }
@@ -400,40 +401,6 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
             })
         }
     }
-    
-    //From downloadBtnAction...
-
-    //
-    //    [self.selectedMedia fetchFileDataWithOffset:self.previousOffset updateQueue:dispatch_get_main_queue() updateBlock:^(NSData * _Nullable data, BOOL isComplete, NSError * _Nullable error) {
-    //        WeakReturn(target);
-    //        if (error) {
-    //            //[target.statusAlertView updateMessage:[[NSString alloc] initWithFormat:@"Download Media Failed:%@",error]];
-    //            [target performSelector:@selector(dismissStatusAlertView) withObject:nil afterDelay:2.0];
-    //        }
-    //        else
-    //        {
-    //            if (isPhoto) {
-    //                if (target.fileData == nil) {
-    //                    target.fileData = [data mutableCopy];
-    //                }
-    //                else {
-    //                    [target.fileData appendData:data];
-    //                }
-    //            }
-    //            target.previousOffset += data.length;
-    //            float progress = target.previousOffset * 100.0 / target.selectedMedia.fileSizeInBytes;
-    //            //[target.statusAlertView updateMessage:[NSString stringWithFormat:@"Downloading: %0.1f%%", progress]];
-    //            if (target.previousOffset == target.selectedMedia.fileSizeInBytes && isComplete) {
-    //                [target dismissStatusAlertView];
-    //                if (isPhoto) {
-    //                    [target showPhotoWithData:target.fileData];
-    //                    [target savePhotoWithData:target.fileData];
-    //                }
-    //            }
-    //        }
-    //    }];
-    //}
-    //
     
     @IBAction func playBtnAction(_ sender: Any) {
         self.displayImageView.isHidden = true
@@ -505,11 +472,17 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
 
     //MARK - Save Download Images
     
-    func savePhotoWithData(data:NSData?) {
+    func savePhotoWithData(data:Data?) {
         if let data = data {
             let tmpDir = NSTemporaryDirectory() as NSString //TODO: how to do this with String?
             let tmpImageFilePath = tmpDir.appendingPathComponent("tmpimage.jpg")
-            data.write(toFile: tmpImageFilePath, atomically: true)
+            if let url = URL(string:tmpImageFilePath) {
+                do {
+                    try data.write(to: url)
+                } catch {
+                    print("failed to write data to file. Error: \(error)")
+                }
+            }
             
             guard let imageURL = URL(string: tmpImageFilePath) else {
                 print("Failed to load a filepath to save to")
@@ -535,7 +508,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         }
 
         if self.statusAlertView == nil {
-            self.statusAlertView = AlertView.showAlertWith(message:message, titles:["Dismiss"], action: {[weak self] (buttonIndex:Int) in
+            self.statusAlertView = AlertView.showAlertWith(message:message, titles:["Dismiss"], actionClosure:{[weak self] (buttonIndex:Int) in
                 if buttonIndex == 0 {
                     self?.dismissStatusAlertView()
                 }

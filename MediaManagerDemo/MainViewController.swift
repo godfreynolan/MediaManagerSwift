@@ -12,6 +12,9 @@ import DJIUXSDK
 
 class MainViewController: UIViewController, DJISDKManagerDelegate {
     
+    fileprivate let connectViaBridge = true
+    fileprivate let bridgeAppIP = "192.168.128.169"
+    
     @IBOutlet weak var connectStatusLabel: UILabel!
     @IBOutlet weak var modelNameLabel: UILabel!
     @IBOutlet weak var connectButton: UIButton!
@@ -84,9 +87,11 @@ class MainViewController: UIViewController, DJISDKManagerDelegate {
             DemoUtility.show(result: NSString.init(format: "Registration Error %@", error.localizedDescription))
         } else {
             DemoUtility.show(result: "Registration Success")
-            DJISDKManager.startConnectionToProduct()
-            //TODO: revert- connect by bridge for debugging
-            //DJISDKManager.enableBridgeMode(withBridgeAppIP: "192.168.128.169")
+            if connectViaBridge {
+                DJISDKManager.enableBridgeMode(withBridgeAppIP: bridgeAppIP)
+            } else {
+                DJISDKManager.startConnectionToProduct()
+            }
             
         }
     }
