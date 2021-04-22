@@ -3,4 +3,4 @@
 //
 
 //#import "VideoPreviewerSDKAdapter.h"
-#import "DJIDecodeImageCalibrateControlLogic.h"
+//#import "DecodeImageCalibrateControlLogic.h"

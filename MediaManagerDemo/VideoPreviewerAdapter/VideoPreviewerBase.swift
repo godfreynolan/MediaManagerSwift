@@ -13,7 +13,6 @@ import DJISDK
 import DJIWidget//TODO how to import one header from module?
 
 //#import "VideoPreviewerSDKAdapter+Lightbridge2.h"
-//#import "DJIDecodeImageCalibrateControlLogic.h"
 //#import <DJIWidget/DJIVTH264DecoderIFrameData.h>
 
 // TODO: Define constant
@@ -39,7 +38,7 @@ class VideoPreviewerBase: NSObject, DJIVideoFeedSourceListener, DJIVideoFeedList
     var cameraMode : DJICameraMode?
     var photoRatio : DJICameraPhotoAspectRatio?
     var isForLightbridge2 : Bool
-    var calibrateLogic : DJIDecodeImageCalibrateControlLogic?
+    var calibrateLogic : DecodeImageCalibrateControlLogic?
     
     
     class func adapterWithDefaultSettings() -> VideoPreviewerBase {
@@ -73,7 +72,7 @@ class VideoPreviewerBase: NSObject, DJIVideoFeedSourceListener, DJIVideoFeedList
         //---------------------------------
         
         self.isForLightbridge2 = false
-        self.calibrateLogic = DJIDecodeImageCalibrateControlLogic()
+        self.calibrateLogic = DecodeImageCalibrateControlLogic()
         super.init()
     }
     
