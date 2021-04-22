@@ -22,7 +22,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     @IBOutlet weak var videoPreviewView: UIView!
     
     var showVideoPreivewView: UIView? //TODO: fix spelling, also how is this different from videoPreviewView?
-    var previewerAdapter: VideoPreviewerBase?
+    var previewerAdapter: VideoPreviewerAdapter?
     
     weak var mediaManager : DJIMediaManager?
     //@property(nonatomic, strong) NSMutableArray* mediaList;
@@ -223,7 +223,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         DJIVideoPreviewer.instance()?.start()
         DJIVideoPreviewer.instance()?.reset()
         DJIVideoPreviewer.instance()?.setView(self.showVideoPreivewView)
-        self.previewerAdapter = VideoPreviewerBase.adapterWithDefaultSettings()
+        self.previewerAdapter = VideoPreviewerAdapter()
         self.previewerAdapter?.start()
         //TODO: enable hardware decoding for simulator
         //#if !TARGET_IPHONE_SIMULATOR

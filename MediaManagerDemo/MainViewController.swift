@@ -84,9 +84,9 @@ class MainViewController: UIViewController, DJISDKManagerDelegate {
             DemoUtility.show(result: NSString.init(format: "Registration Error %@", error.localizedDescription))
         } else {
             DemoUtility.show(result: "Registration Success")
-            //DJISDKManager.startConnectionToProduct()
+            DJISDKManager.startConnectionToProduct()
             //TODO: revert- connect by bridge for debugging
-            DJISDKManager.enableBridgeMode(withBridgeAppIP: "192.168.128.169")
+            //DJISDKManager.enableBridgeMode(withBridgeAppIP: "192.168.128.169")
             
         }
     }
