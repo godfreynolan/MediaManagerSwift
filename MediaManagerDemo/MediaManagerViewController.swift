@@ -32,7 +32,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     //@property(nonatomic) DJIMediaFile *selectedMedia;
     var selectedMedia : DJIMediaFile?
     //@property(nonatomic) NSUInteger previousOffset;
-    var previousOffset : UInt?
+    var previousOffset = UInt(0)
     //@property(nonatomic) NSMutableData *fileData;
     var fileData : Data?
     //@property (nonatomic) DJIScrollView *statusView;
@@ -363,43 +363,41 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
                 }
             })
         }
-        if let previousOffset = self.previousOffset {
-            self.selectedMedia?.fetchData(withOffset: previousOffset, update: DispatchQueue.main, update: {[weak self] (data:Data?, isComplete: Bool, error:Error?) in
-                if let error = error {
-                    //TODO: commented in original? why?
-                    print("Download Media Failed:%@",error)
-                    //[target.statusAlertView updateMessage:[[NSString alloc] initWithFormat:@"Download Media Failed:%@",error]];
-                    if let unwrappedSelf = self {
-                        unwrappedSelf.perform(#selector(unwrappedSelf.dismissStatusAlertView), with: nil, afterDelay: 2.0)
-                    }
-                } else {
-                    if isPhoto {
-                        if let data = data {
-                            if self?.fileData == nil {
-                                self?.fileData = data//TODO: mutable copy?
-                                //                    target.fileData = [data mutableCopy];
-                            } else {
-                                self?.fileData?.append(data)//Again, mutable copy necessary?
-                            }
-                        }
-                    }
+        self.selectedMedia?.fetchData(withOffset: previousOffset, update: DispatchQueue.main, update: {[weak self] (data:Data?, isComplete: Bool, error:Error?) in
+            if let error = error {
+                //TODO: commented in original? why?
+                print("Download Media Failed:%@",error)
+                //[target.statusAlertView updateMessage:[[NSString alloc] initWithFormat:@"Download Media Failed:%@",error]];
+                if let unwrappedSelf = self {
+                    unwrappedSelf.perform(#selector(unwrappedSelf.dismissStatusAlertView), with: nil, afterDelay: 2.0)
+                }
+            } else {
+                if isPhoto {
                     if let data = data {
-                        self?.previousOffset = self?.previousOffset ?? 0 + UInt(data.count)
-                    }
-                    if let selectedFileSizeBytes = self?.selectedMedia?.fileSizeInBytes {
-                        let progress = Float(self?.previousOffset ?? 0) * 100.0 / Float(selectedFileSizeBytes)
-                        self?.statusAlertView?.update(message: String(format: "Downloading: %0.1f%%", progress))
-                        if isComplete {
-                            self?.dismissStatusAlertView()
-                            if (isPhoto) {
-                                self?.showPhotoWithData(data: self?.fileData)
-                                self?.savePhotoWithData(data: self?.fileData)
-                            }
+                        if self?.fileData == nil {
+                            self?.fileData = data//TODO: mutable copy?
+                            //                    target.fileData = [data mutableCopy];
+                        } else {
+                            self?.fileData?.append(data)//Again, mutable copy necessary?
                         }
                     }
                 }
-            })
-        }
+                if let data = data, let self = self {
+                    self.previousOffset = self.previousOffset + UInt(data.count)
+                }
+                if let selectedFileSizeBytes = self?.selectedMedia?.fileSizeInBytes {
+                    let progress = Float(self?.previousOffset ?? 0) * 100.0 / Float(selectedFileSizeBytes)
+                    self?.statusAlertView?.update(message: String(format: "Downloading: %0.1f%%", progress))
+                    if isComplete {
+                        self?.dismissStatusAlertView()
+                        if (isPhoto) {
+                            self?.showPhotoWithData(data: self?.fileData)
+                            self?.savePhotoWithData(data: self?.fileData)
+                        }
+                    }
+                }
+            }
+        })
     }
     
     @IBAction func playBtnAction(_ sender: Any) {
@@ -492,7 +490,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
                 //__unused PHAssetChangeRequest *req = [PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:imageURL];
                 _ = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: imageURL)
             } completionHandler: { (success:Bool, error: Error?) in
-                print("success = %d, error = %@", success, error?.localizedDescription ?? "no")
+                print("success = \(success), error = \(error?.localizedDescription ?? "no")")
             }
         }
     }
