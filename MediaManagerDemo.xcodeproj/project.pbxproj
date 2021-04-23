@@ -44,7 +44,6 @@
 		2247A303FAF91BC28A12F8AB /* Pods-MediaManagerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MediaManagerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-MediaManagerDemo/Pods-MediaManagerDemo.release.xcconfig"; sourceTree = "<group>"; };
 		3A25457D2630FE9F002987AD /* DecodeImageCalibrateLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeImageCalibrateLogic.swift; sourceTree = "<group>"; };
 		3A58A0FF262A1F4500753039 /* MediaManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManagerViewController.swift; sourceTree = "<group>"; };
-		3A805F9726273AA200B3899B /* MediaManagerDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MediaManagerDemo-Bridging-Header.h"; sourceTree = "<group>"; };
 		3A805F9826273AA200B3899B /* DemoUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoUtility.swift; sourceTree = "<group>"; };
 		3A805F9A26273B7700B3899B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A805FA826273FF900B3899B /* DemoComponentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoComponentHelper.swift; sourceTree = "<group>"; };
@@ -53,7 +52,6 @@
 		3A805FBA2627626100B3899B /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		3A805FC826276DB600B3899B /* DJIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJIScrollView.swift; sourceTree = "<group>"; };
 		3AD7EDA72631D56A00D1C580 /* VideoPreviewerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPreviewerAdapter.swift; sourceTree = "<group>"; };
-		A41CA8B31F39962B0087BE43 /* DemoUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoUtility.h; sourceTree = "<group>"; };
 		A41CA8B91F39962B0087BE43 /* DJIScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DJIScrollView.xib; sourceTree = "<group>"; };
 		A44F554B21776C4100FC3003 /* DistortionResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DistortionResource.bundle; sourceTree = "<group>"; };
 		A4E313CB1F3022AC001203C6 /* MediaManagerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaManagerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,13 +102,11 @@
 		A41CA8B21F39962B0087BE43 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				A41CA8B31F39962B0087BE43 /* DemoUtility.h */,
 				3A805F9826273AA200B3899B /* DemoUtility.swift */,
 				3A805FA826273FF900B3899B /* DemoComponentHelper.swift */,
 				3A805FB226274CEC00B3899B /* AlertView.swift */,
 				3A805FC826276DB600B3899B /* DJIScrollView.swift */,
 				A41CA8B91F39962B0087BE43 /* DJIScrollView.xib */,
-				3A805F9726273AA200B3899B /* MediaManagerDemo-Bridging-Header.h */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -422,7 +418,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dji.FPVDemoSwiftRIIS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "MediaManagerDemo/Utilities/MediaManagerDemo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "arm64 arm64e armv7s";
@@ -442,7 +437,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dji.FPVDemoSwiftRIIS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "MediaManagerDemo/Utilities/MediaManagerDemo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "arm64 arm64e armv7s";
 			};
