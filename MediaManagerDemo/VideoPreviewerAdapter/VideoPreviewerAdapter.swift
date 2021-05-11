@@ -214,7 +214,7 @@ class VideoPreviewerAdapter: NSObject {
 
 }
 
-// MARK: lightbridge2
+//MARK: lightbridge2
 extension VideoPreviewerAdapter {
     
     fileprivate func listenToLightbridge2() {
@@ -314,7 +314,7 @@ extension VideoPreviewerAdapter {
     }
 }
 
-// MARK: delegate
+//MARK: delegate
 extension VideoPreviewerAdapter: DJIVideoFeedSourceListener {
     func videoFeed(_ videoFeed: DJIVideoFeed, didChange physicalSource: DJIVideoFeedPhysicalSource) {
         guard videoFeed == feed else {
@@ -375,7 +375,7 @@ extension VideoPreviewerAdapter: DJIVideoPreviewerFrameControlDelegate {
     
 }
 
-// MARK: helper
+//MARK: helper
 extension VideoPreviewerAdapter {
     fileprivate class func camera() -> DJICamera? {
         guard let product = DJISDKManager.product() else { return nil }

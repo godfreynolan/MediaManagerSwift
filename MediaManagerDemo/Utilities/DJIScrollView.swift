@@ -76,6 +76,7 @@ class DJIScrollView : UIView, UIScrollViewDelegate {
     //    return self;
     //}
     
+    //TODO: what to do with all this commented code?
     //- (id)initWithCoder:(NSCoder *)aDecoder {
     //    self = [super initWithCoder:aDecoder];
     //    if(self) {
@@ -98,11 +99,11 @@ class DJIScrollView : UIView, UIScrollViewDelegate {
     //}
     //
     
-    @objc public func write(status:NSString) {//TODO: once usages are swift, use String not NSString
-        self.statusTextView?.text = status as String
+    public func write(status:String) {
+        self.statusTextView?.text = status
     }
     
-    @objc public func show() {
+    public func show() {
         self.superview?.bringSubviewToFront(self)
         UIView.animate(withDuration: 0.25) {
             self.alpha = 1.0

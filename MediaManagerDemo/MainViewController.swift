@@ -46,7 +46,7 @@ class MainViewController: UIViewController, DJISDKManagerDelegate {
         ///If this demo is used in China, it's required to login to your DJI account to activate the application. Also you need to use DJI Go app to bind the aircraft to your DJI account. For more details, please check this demo's tutorial.
         DJISDKManager.userAccountManager().logIntoDJIUserAccount(withAuthorizationRequired: false) {(state: DJIUserAccountState, error: Error?) in
             if let error = error {
-                DemoUtility.show(result: NSString.init(format: "Login failed: %@", error.localizedDescription))
+                DemoUtility.show(result: "Login failed:\(error.localizedDescription)")
             }
         }
     }
@@ -72,11 +72,11 @@ class MainViewController: UIViewController, DJISDKManagerDelegate {
     
     func updateStatusBasedOn(product:DJIBaseProduct?) {
         self.connectStatusLabel.text = NSLocalizedString("Status: Product Connected", comment: "")
-        if let product = product {
-            self.modelNameLabel.text = NSString.init(format: "Model: %@", product.model!) as String
+        if let model = product?.model {
+            self.modelNameLabel.text = "Model: \(model)"
             self.modelNameLabel.isHidden = false
         } else {
-            //TODO: use localized string
+            //TODO: use localized string?
             self.connectStatusLabel.text = "Status: Product Not Connected"
             self.modelNameLabel.text = "Model Unknown"
         }
@@ -84,7 +84,7 @@ class MainViewController: UIViewController, DJISDKManagerDelegate {
     
     func appRegisteredWithError(_ error: Error?) {
         if let error = error {
-            DemoUtility.show(result: NSString.init(format: "Registration Error %@", error.localizedDescription))
+            DemoUtility.show(result: "Registration Error \(error.localizedDescription)")
         } else {
             DemoUtility.show(result: "Registration Success")
             if connectViaBridge {

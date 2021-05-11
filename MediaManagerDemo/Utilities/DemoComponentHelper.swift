@@ -64,9 +64,4 @@ class DemoComponentHelper: DemoUtility {
         }
         return nil
     }
-    
-    //TODO: should return be optional?
-    @objc public class func startListeningAndGetValueForChangesOn(key:DJIKey, withListener:Any, andUpdateBlock:DJIKeyedListenerUpdateBlock) -> DJIKeyedValue? {
-        return DJISDKManager.keyManager()?.getValueFor(key)
-    }
 }

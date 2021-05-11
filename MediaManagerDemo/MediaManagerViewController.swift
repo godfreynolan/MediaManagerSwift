@@ -21,29 +21,24 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     @IBOutlet weak var reloadBtn: UIButton!
     @IBOutlet weak var videoPreviewView: UIView!
     
-    var showVideoPreivewView: UIView? //TODO: fix spelling, also how is this different from videoPreviewView?
+    var showVideoPreiviewView: UIView? //TODO: How is this different from videoPreviewView? Name appropriately...
     var previewerAdapter: VideoPreviewerAdapter?
     
     weak var mediaManager : DJIMediaManager?
-    //@property(nonatomic, strong) NSMutableArray* mediaList;
     var mediaList : [DJIMediaFile]?
-    //@property(nonatomic, strong) AlertView *statusAlertView;
     var statusAlertView : AlertView?
-    //@property(nonatomic) DJIMediaFile *selectedMedia;
     var selectedMedia : DJIMediaFile?
-    //@property(nonatomic) NSUInteger previousOffset;
     var previousOffset = UInt(0)
-    //@property(nonatomic) NSMutableData *fileData;
     var fileData : Data?
-    //@property (nonatomic) DJIScrollView *statusView;
     var statusView : DJIScrollView?
-    //@property (nonatomic, strong) NSIndexPath *selectedCellIndexPath;
     var selectedCellIndexPath : IndexPath?
-    //@property (nonatomic, strong) DJIRTPlayerRenderView *renderView;
     var renderView : DJIRTPlayerRenderView?
 
-    
-    
+    //TODO: rewrite as property
+    func prefersStatusBarHidden() -> Bool {
+        return false
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.mediaList?.count ?? 0
     }
@@ -51,9 +46,6 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "mediaFileCell", for: indexPath)
         
-//        if cell == nil {//TODO: necessary? not an optional type...
-//            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"mediaFileCell"];
-//        }
         if let selectedCellIndexPath = self.selectedCellIndexPath {
             if selectedCellIndexPath == indexPath {
                 cell.accessoryType = UITableViewCell.AccessoryType.checkmark
@@ -105,19 +97,13 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        //TODO: can these two lines be consolidated?
-        let optionalCamera = DemoUtility.fetchCamera()
-        guard let camera = optionalCamera else {
-            return
-        }
+        guard let camera = DemoUtility.fetchCamera() else { return }
         
         camera.setMode(DJICameraMode.shootPhoto, withCompletion: { (error: Error?) in
             if let error = error {
-                DemoUtility.show(result: NSString(format: "Set CameraWorkModeShootPhoto Failed, %@", error.localizedDescription))
+                DemoUtility.show(result: "Set CameraWorkModeShootPhoto Failed, \(error.localizedDescription)")
             }
         })
-        
-
             
         if self.hasPlaybackFor(cameraName: camera.displayName) {
             self.cleanupRenderViewPlaybacker()
@@ -154,13 +140,8 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         super.viewDidLoad()
         self.initData()
     }
-
-    //TODO: can be property?
-    func prefersStatusBarHidden() -> Bool {
-        return false
-    }
     
-    //#pragma mark - Custom Methods
+    //MARK: - Custom Methods
     func initData() {
         self.mediaList = [DJIMediaFile]()
         self.cancelBtn.isEnabled = false
@@ -189,7 +170,6 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         }
         self.renderView = DJIRTPlayerRenderView(decoderType: LiveStreamDecodeType.vtHardware,
                                                 encoderType: encoderType)
-        //TODO: better practice on unwrapping optional properties?
         guard self.renderView != nil else {
             return
         }
@@ -198,45 +178,33 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         self.renderView?.isHidden = true
     }
     
-    func cleanupRenderViewPlaybacker() {//TODO: how can you set an outlet view to nil? Why do you need to check for nil?
+    func cleanupRenderViewPlaybacker() {
         self.videoPreviewView.removeFromSuperview()
-        self.videoPreviewView = nil
+        self.videoPreviewView = nil //TODO: necessary? Test for memory leak...
         self.renderView = nil
     }
     
-    //- (void)cleanupRenderViewPlaybacker
-    //{
-    //    if (self.videoPreviewView != nil) {
-    //        [self.videoPreviewView removeFromSuperview];
-    //        self.videoPreviewView = nil;
-    //    }
-    //
-    //    self.renderView = nil;
-    //}
-    //
-    
     func setupVideoPreviewer() {
-        print("TODO: setupVideoPreviewer")
-        self.showVideoPreivewView = UIView(frame: self.videoPreviewView.bounds)
-        self.videoPreviewView.addSubview(self.showVideoPreivewView!)
+        self.showVideoPreiviewView = UIView(frame: self.videoPreviewView.bounds)
+        self.videoPreviewView.addSubview(self.showVideoPreiviewView!)
         DJIVideoPreviewer.instance().type = DJIVideoPreviewerType.autoAdapt
         DJIVideoPreviewer.instance()?.start()
         DJIVideoPreviewer.instance()?.reset()
-        DJIVideoPreviewer.instance()?.setView(self.showVideoPreivewView)
+        DJIVideoPreviewer.instance()?.setView(self.showVideoPreiviewView)
         self.previewerAdapter = VideoPreviewerAdapter()
         self.previewerAdapter?.start()
-        //TODO: enable hardware decoding for simulator
-        //#if !TARGET_IPHONE_SIMULATOR
-        //    [DJIVideoPreviewer instance].enableHardwareDecode = YES;
-        //#endif
+
+        if TARGET_IPHONE_SIMULATOR == 1 { //TODO: TARGET_IPHONE_SIMULATOR is depricated... look up replacement
+            DJIVideoPreviewer.instance().enableHardwareDecode = true
+        }
         
         self.previewerAdapter?.setupFrameControlHandler()
     }
     
     func cleanupVideoPreviewer() {
-        if let showVideoPreviewView = self.showVideoPreivewView {
+        if let showVideoPreviewView = self.showVideoPreiviewView {
             showVideoPreviewView.removeFromSuperview()
-            self.showVideoPreivewView = nil
+            self.showVideoPreiviewView = nil
         }
         DJIVideoPreviewer.instance()?.unSetView()
     }
@@ -318,9 +286,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         self.statusAlertView = nil
     }
     
-    // MARK - IBAction Methods
-    
-    
+    //MARK: - IBAction Methods
     @IBAction func backBtnAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -365,8 +331,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         }
         self.selectedMedia?.fetchData(withOffset: previousOffset, update: DispatchQueue.main, update: {[weak self] (data:Data?, isComplete: Bool, error:Error?) in
             if let error = error {
-                //TODO: commented in original? why?
-                print("Download Media Failed:%@",error)
+                print("Download Media Failed:%@",error)//TODO: update statusAlertView instead of just printing...
                 //[target.statusAlertView updateMessage:[[NSString alloc] initWithFormat:@"Download Media Failed:%@",error]];
                 if let unwrappedSelf = self {
                     unwrappedSelf.perform(#selector(unwrappedSelf.dismissStatusAlertView), with: nil, afterDelay: 2.0)
@@ -375,10 +340,9 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
                 if isPhoto {
                     if let data = data {
                         if self?.fileData == nil {
-                            self?.fileData = data//TODO: mutable copy?
-                            //                    target.fileData = [data mutableCopy];
+                            self?.fileData = data
                         } else {
-                            self?.fileData?.append(data)//Again, mutable copy necessary?
+                            self?.fileData?.append(data)
                         }
                     }
                 }
@@ -410,7 +374,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
                     self.positionTextField.placeholder = String(format: "%d sec", Int(selectedMedia.durationInSeconds))
                     self.mediaManager?.playVideo(selectedMedia, withCompletion: { (error:Error?) in
                         if let error = error {
-                            DemoUtility.show(result: String(format:"Play Video Failed: %@", error.localizedDescription) as NSString)//TODO: use String, convert DemoUtility function to swift
+                            DemoUtility.show(result: "Play Video Failed: \(error.localizedDescription)")//TODO: use String, convert DemoUtility function to swift
                         }
                     })
                 }
@@ -421,7 +385,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     @IBAction func resumeBtnAction(_ sender: Any) {
         self.mediaManager?.resume(completion: { (error:Error?) in
             if let error = error {
-                DemoUtility.show(result: String(format: "Resume failed: %@", error.localizedDescription) as NSString)
+                DemoUtility.show(result: "Resume failed: \(error.localizedDescription)")
             }
         })
     }
@@ -429,7 +393,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     @IBAction func pauseBtnAction(_ sender: Any) {
         self.mediaManager?.pause(completion: { (error:Error?) in
             if let error = error {
-                DemoUtility.show(result: String(format: "Pause failed: %@", error.localizedDescription) as NSString)
+                DemoUtility.show(result: "Pause failed: \(error.localizedDescription)")
             }
         })
     }
@@ -437,7 +401,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     @IBAction func stopBtnAction(_ sender: Any) {
         self.mediaManager?.stop(completion: { (error: Error?) in
             if let error = error {
-                DemoUtility.show(result: String(format:"Stop failed: %@", error.localizedDescription) as NSString)
+                DemoUtility.show(result: "Stop failed: \(error.localizedDescription)")
             }
         })
     }
@@ -468,7 +432,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         self.statusView?.show()
     }
 
-    //MARK - Save Download Images
+    //MARK: - Save Download Images
     
     func savePhotoWithData(data:Data?) {
         if let data = data {
@@ -514,7 +478,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         }
     }
 
-    //MARK - DJIMediaManagerDelegate Method
+    //MARK: - DJIMediaManagerDelegate Method
     
     func manager(_ manager: DJIMediaManager, didUpdate state: DJIMediaVideoPlaybackState) {
         var stateString = ""
@@ -528,18 +492,14 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         stateString.append(String(format:"Status: %@\n", self.statusToString(status:state.playbackStatus) ?? "nil"))
         stateString.append(String(format:"Position: %f\n", state.playingPosition))
     
-        self.statusView?.write(status: stateString as NSString)//TODO: use String
+        self.statusView?.write(status: stateString)
     }
     
     func manager(_ manager: DJIMediaManager, didUpdateVideoPlaybackData data: UnsafeMutablePointer<UInt8>, length: Int, forRendering: Bool) {
-        //    [self.renderView decodeH264CompleteFrameData:data
-        //                                      length:length
-        //                                  decodeOnly:!forRendering];
         self.renderView?.decodeH264RawData(data, length: UInt(length))
     }
 
-    //MARK - Table view data source
-    //
+    //MARK: - Table view data source
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -597,16 +557,13 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         if let currentMedia = self.mediaList?[indexPath.row] {
             self.mediaManager?.delete([currentMedia], withCompletion: { (failedFiles: [DJIMediaFile], error: Error?) in
                 if let error = error {
-                    DemoUtility.show(result: String(format:"Delete File Failed:%@",error.localizedDescription) as NSString)//convert to String...
+                    DemoUtility.show(result: "Delete File Failed: \(error.localizedDescription)")
                     for media:DJIMediaFile in failedFiles {
                         print("%@ delete failed",media.fileName)
                     }
                 } else {
-                    //ShowResult(@"Delete File Successfully");
                     DemoUtility.show(result: "Delete File Successfully")
-                    //[self.mediaList removeObjectAtIndex:indexPath.row];
                     self.mediaList?.remove(at: indexPath.row)
-                    //[self.mediaTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
                     self.mediaTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
                 }
             })

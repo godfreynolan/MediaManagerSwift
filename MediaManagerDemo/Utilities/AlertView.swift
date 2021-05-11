@@ -16,6 +16,8 @@ import UIKit
 //#define NavControllerObject(navController) UINavigationController* navController = (UINavigationController*)[[UIApplication sharedApplication] keyWindow].rootViewController;
 
 //
+
+//TODO: implement updateMessage?
 //-(void) updateMessage:(nullable NSString *)message;
 
 
@@ -24,11 +26,8 @@ class AlertView: NSObject {
     
     var alertController : UIAlertController?
 
-    //+(instancetype _Nullable) showAlertViewWithMessage:(NSString* _Nullable)message titles:(NSArray<NSString*> * _Nullable)titles action:(DJIAlertViewActionBlock _Nullable)actionBlock;
     public class func showAlertWith(message:String, titles:[String]?, actionClosure:((Int)->())?) -> AlertView {
-        //    DJIAlertView* alertView = [[DJIAlertView alloc] init];
         let alertView = AlertView()
-        //    alertView.alertController = [UIAlertController alertControllerWithTitle:@"" message:message preferredStyle:UIAlertControllerStyleAlert];
         alertView.alertController = UIAlertController(title: "", message: message, preferredStyle: UIAlertController.Style.alert)
         
         if let titles = titles {
@@ -112,13 +111,11 @@ class AlertView: NSObject {
         return alertView
     }
     
-    @objc public func dismissAlertView() {
+    public func dismissAlertView() {
         self.alertController?.dismiss(animated: true, completion: nil)
-        
-
     }
     
-    @objc public func update(message:String) {
+    public func update(message:String) {
         self.alertController?.message = message
     }
 }
