@@ -12,7 +12,7 @@ import UIKit
 class DJIScrollView : UIView, UIScrollViewDelegate {
     
     var fontSize : Float?
-    var title : NSString?
+    var title : String?
     var statusTextView : UILabel?
 
     @IBOutlet var view: UIView!
@@ -34,7 +34,6 @@ class DJIScrollView : UIView, UIScrollViewDelegate {
     }
     
     func setup() {
-        //Bundle.main.loadNibNamed(NSStringFromClass(type(of: self.self)), owner: self, options: nil)
         //TODO: use type(of:) to get class type
         Bundle.main.loadNibNamed("DJIScrollView", owner: self, options: nil)
         self.addSubview(self.view)

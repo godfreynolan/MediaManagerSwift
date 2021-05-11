@@ -53,17 +53,8 @@ class AlertView: NSObject {
         return alertView
     }
     
-    //+(instancetype _Nullable) showAlertViewWithMessage:(NSString* _Nullable)message titles:(NSArray<NSString*> * _Nullable)titles textFields:(NSArray<NSString*>* _Nullable)textFields action:(DJIAlertInputViewActionBlock _Nullable)actionBlock;
     public class func showAlertWith(message:String, titles:[String]?, textFields:[String]?, actionClosure:((Int)->())?) -> AlertView  {
-        //    DJIAlertView* alertView = [[DJIAlertView alloc] init];
         let alertView = AlertView()
-        //
-        //    alertView.alertController = [UIAlertController alertControllerWithTitle:@"" message:message preferredStyle:UIAlertControllerStyleAlert];
-        //    for (NSUInteger index = 0; index < textFields.count; ++index) {
-        //        [alertView.alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        //            textField.placeholder = textFields[index];
-        //        }];
-        //    }
         alertView.alertController = UIAlertController(title: "", message: message, preferredStyle: UIAlertController.Style.alert)
         if let textFields = textFields {
             for textFieldText in textFields {
@@ -100,9 +91,7 @@ class AlertView: NSObject {
                 alertView.alertController?.addAction(alertAction)
             }
         }
-        //
-        //    NavControllerObject(navController);
-        //    [navController presentViewController:alertView.alertController animated:YES completion:nil];
+        
         if let navController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController {
             if let alertController = alertView.alertController {
                 navController.present(alertController, animated: true, completion: nil)

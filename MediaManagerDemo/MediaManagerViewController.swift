@@ -331,8 +331,8 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         }
         self.selectedMedia?.fetchData(withOffset: previousOffset, update: DispatchQueue.main, update: {[weak self] (data:Data?, isComplete: Bool, error:Error?) in
             if let error = error {
-                print("Download Media Failed:%@",error)//TODO: update statusAlertView instead of just printing...
                 //[target.statusAlertView updateMessage:[[NSString alloc] initWithFormat:@"Download Media Failed:%@",error]];
+                print("Download Media Failed:%@",error)//TODO: update statusAlertView instead of just printing...
                 if let unwrappedSelf = self {
                     unwrappedSelf.perform(#selector(unwrappedSelf.dismissStatusAlertView), with: nil, afterDelay: 2.0)
                 }
