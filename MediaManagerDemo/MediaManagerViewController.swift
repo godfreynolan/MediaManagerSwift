@@ -342,7 +342,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         if let mediaType = self.selectedMedia?.mediaType {
             if (mediaType == DJIMediaType.MOV || mediaType == DJIMediaType.MP4) {
                 if let selectedMedia = self.selectedMedia {
-                    self.positionTextField.placeholder = String(format: "\(Int(selectedMedia.durationInSeconds)) sec")
+                    self.positionTextField.placeholder = "\(Int(selectedMedia.durationInSeconds)) sec"
                     self.mediaManager?.playVideo(selectedMedia, withCompletion: { (error:Error?) in
                         if let error = error {
                             DemoUtility.show(result: "Play Video Failed: \(error.localizedDescription)")
