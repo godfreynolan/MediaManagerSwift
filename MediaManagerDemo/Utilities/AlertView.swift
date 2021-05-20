@@ -43,6 +43,7 @@ class AlertView: NSObject {
                 alertView.alertController?.addAction(alertAction)
             }
         }
+        //TODO: revisit...
         //#define NavControllerObject(navController) UINavigationController* navController = (UINavigationController*)[[UIApplication sharedApplication] keyWindow].rootViewController;
         //    NavControllerObject(navController);
         if let navController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController {

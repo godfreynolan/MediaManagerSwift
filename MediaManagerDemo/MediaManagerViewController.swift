@@ -38,35 +38,6 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     func prefersStatusBarHidden() -> Bool {
         return false
     }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.mediaList?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "mediaFileCell", for: indexPath)
-        
-        if let selectedCellIndexPath = self.selectedCellIndexPath {
-            if selectedCellIndexPath == indexPath {
-                cell.accessoryType = UITableViewCell.AccessoryType.checkmark
-            } else {
-                cell.accessoryType = UITableViewCell.AccessoryType.none
-            }
-        }
-        
-        if let media = self.mediaList?[indexPath.row] {
-            cell.textLabel?.text = media.fileName;
-            cell.detailTextLabel?.text = String(format: "Create Date: %@ Size: %0.1fMB Duration:%f cusotmInfo:%@", media.timeCreated, Double(media.fileSizeInBytes) / 1024.0 / 1024.0,media.durationInSeconds, media.customInformation ?? "none")
-            
-            if let thumbnail = media.thumbnail {
-                cell.imageView?.image = thumbnail
-            } else {
-                cell.imageView?.image = UIImage.init(named: "dji.png")
-            }
-        }
-        
-        return cell
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -320,7 +291,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         }
         let isPhoto = self.selectedMedia?.mediaType == DJIMediaType.JPEG || self.selectedMedia?.mediaType == DJIMediaType.TIFF
         if (self.statusAlertView == nil) {
-            let message = String(format: "Fetch Media Data \n 0.0")
+            let message = "Fetch Media Data \n 0.0"
             self.statusAlertView = AlertView.showAlertWith(message: message, titles: ["Cancel"], actionClosure:{[weak self] (buttonIndex: Int) -> () in
                 if (buttonIndex == 0) {
                     self?.selectedMedia?.stopFetchingFileData(completion: {[weak self] (error: Error?) in
@@ -371,10 +342,10 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         if let mediaType = self.selectedMedia?.mediaType {
             if (mediaType == DJIMediaType.MOV || mediaType == DJIMediaType.MP4) {
                 if let selectedMedia = self.selectedMedia {
-                    self.positionTextField.placeholder = String(format: "%d sec", Int(selectedMedia.durationInSeconds))
+                    self.positionTextField.placeholder = String(format: "\(Int(selectedMedia.durationInSeconds)) sec")
                     self.mediaManager?.playVideo(selectedMedia, withCompletion: { (error:Error?) in
                         if let error = error {
-                            DemoUtility.show(result: "Play Video Failed: \(error.localizedDescription)")//TODO: use String, convert DemoUtility function to swift
+                            DemoUtility.show(result: "Play Video Failed: \(error.localizedDescription)")
                         }
                     })
                 }
@@ -463,7 +434,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         var message = ""
         if let error = error {
             //Show message when save image failed
-            message = String(format:"Save Image Failed! Error: %@", error.description);
+            message = "Save Image Failed! Error: \(error.description)"
         } else {
             //Show message when save image successfully
             message = "Saved to Photo Album";
@@ -482,17 +453,14 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     
     func manager(_ manager: DJIMediaManager, didUpdate state: DJIMediaVideoPlaybackState) {
         var stateString = ""
-        if state.playingMedia == nil {//TODO: should state be an optional?
-            stateString.append("No media \n")
-        } else {
-            stateString.append(String(format:"media: %@\n", state.playingMedia.fileName))
-            stateString.append(String(format:"Total: %f\n", state.playingMedia.durationInSeconds))
-            stateString.append(String(format:"Orientation: %@\n", self.orientationToString(orientation: state.playingMedia.videoOrientation) ?? "nil"))
-        }
-        stateString.append(String(format:"Status: %@\n", self.statusToString(status:state.playbackStatus) ?? "nil"))
-        stateString.append(String(format:"Position: %f\n", state.playingPosition))
+        stateString.append("Media: \(state.playingMedia.fileName)\n")
+        stateString.append("Total: \(state.playingMedia.durationInSeconds)\n")
+        let orientationString = self.orientationToString(orientation: state.playingMedia.videoOrientation) ?? "nil"
+        stateString.append("Orientation: \(orientationString)")
+        stateString.append("Status: \(self.statusToString(status:state.playbackStatus) ?? "nil")\n")
+        stateString.append("Position: \(state.playingPosition)\n")
     
-        self.statusView?.write(status: stateString)
+        self.statusView?.write(status: stateString)//TODO: where should this be appearing? check objc version...
     }
     
     func manager(_ manager: DJIMediaManager, didUpdateVideoPlaybackData data: UnsafeMutablePointer<UInt8>, length: Int, forRendering: Bool) {
@@ -505,14 +473,13 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     }
 
     
-    func tableView(tableView: UITableView, numberOfRowsInSection: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection: Int) -> Int {
         return self.mediaList?.count ?? 0
     }
     
     //TODO: should all delegate functions be private? should I be going through making methods private if possible?
-    private func tableView(tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "mediaFileCell") ??
-            UITableViewCell.init(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "mediaFileCell")
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "mediaFileCell", for:indexPath)
         
         if self.selectedCellIndexPath == indexPath {
             cell.accessoryType = UITableViewCell.AccessoryType.checkmark
@@ -522,7 +489,11 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         
         if let media = self.mediaList?[indexPath.row] {
             cell.textLabel?.text = media.fileName
-            cell.detailTextLabel?.text = String(format: "Create Date: %@ Size: %0.1fMB Duration:%f cusotmInfo:%@", media.timeCreated, Double(media.fileSizeInBytes) / 1024.0 / 1024.0,media.durationInSeconds, media.customInformation ?? "none")
+            var detailText = "Create Date: \(media.timeCreated)"
+            detailText.append(String(format: " Size: %0.1fMB", Double(media.fileSizeInBytes) / 1024.0 / 1024.0))
+            detailText.append(" Duration: \(media.durationInSeconds)")
+            detailText.append(" CustomInfo: \(media.customInformation ?? "none")")
+            cell.detailTextLabel?.text = detailText
             if let thumbnail = media.thumbnail {
                 cell.imageView?.image = thumbnail
             } else {
