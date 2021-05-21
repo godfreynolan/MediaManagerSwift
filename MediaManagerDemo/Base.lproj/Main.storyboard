@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="GKN-bj-FPE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="GKN-bj-FPE">
     <device id="ipad9_7" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -252,7 +252,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="moveToPositionAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="Szu-hS-tMy"/>
+                                    <action selector="moveToPositionAction:" destination="egb-Yz-hmW" eventType="touchUpInside" id="pbJ-EP-pm6"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MvZ-tg-EH7">
@@ -398,7 +398,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="mediaFileCell" textLabel="WCT-yK-gfa" detailTextLabel="qle-AT-nfV" style="IBUITableViewCellStyleSubtitle" id="Qri-r7-KjQ">
-                                        <rect key="frame" x="0.0" y="28" width="372" height="44"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="372" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qri-r7-KjQ" id="MLz-2J-ae8">
                                             <rect key="frame" x="0.0" y="0.0" width="372" height="44"/>
@@ -500,7 +500,7 @@
                         <outlet property="mediaTableView" destination="ITp-Ih-Waf" id="swK-wQ-u3u"/>
                         <outlet property="positionTextField" destination="MvZ-tg-EH7" id="x4B-r4-GWL"/>
                         <outlet property="reloadBtn" destination="7s3-p4-edU" id="UUB-O2-J9l"/>
-                        <outlet property="videoPreviewView" destination="K8K-DD-Eb0" id="cbr-ff-Dht"/>
+                        <outlet property="videoPreviewContainerView" destination="K8K-DD-Eb0" id="cbr-ff-Dht"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yq9-Rn-oca" userLabel="First Responder" sceneMemberID="firstResponder"/>

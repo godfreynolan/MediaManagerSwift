@@ -19,9 +19,9 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     @IBOutlet weak var mediaTableView: UITableView!
     @IBOutlet weak var positionTextField: UITextField!
     @IBOutlet weak var reloadBtn: UIButton!
-    @IBOutlet weak var videoPreviewView: UIView!
+    @IBOutlet weak var videoPreviewContainerView: UIView!
     
-    var showVideoPreiviewView: UIView? //TODO: How is this different from videoPreviewView? Name appropriately...
+    var videoPreviewView: UIView?
     var previewerAdapter: VideoPreviewerAdapter?
     
     weak var mediaManager : DJIMediaManager?
@@ -40,7 +40,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let optionalCamera = DemoUtility.fetchCamera()
+        let optionalCamera = fetchCamera()
         guard let camera = optionalCamera else {
             print("Couldn't fetch camera")
             return
@@ -56,8 +56,6 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         self.loadMediaList()
         
         if self.hasPlaybackFor(cameraName: camera.displayName) {
-        
-
             self.setupRenderViewPlaybacker()
         } else {
             self.setupVideoPreviewer()
@@ -67,11 +65,11 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        guard let camera = DemoUtility.fetchCamera() else { return }
+        guard let camera = fetchCamera() else { return }
         
         camera.setMode(DJICameraMode.shootPhoto, withCompletion: { (error: Error?) in
             if let error = error {
-                DemoUtility.show(result: "Set CameraWorkModeShootPhoto Failed, \(error.localizedDescription)")
+                showAlertWith("Set CameraWorkModeShootPhoto Failed, \(error.localizedDescription)")
             }
         })
             
@@ -130,7 +128,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     func setupRenderViewPlaybacker() {
         //Support Video Playback for Phantom 4 Professional, Inspire 2
         var encoderType = H264EncoderType._unknown
-        if let camera = DemoUtility.fetchCamera() {
+        if let camera = fetchCamera() {
             if camera.displayName == DJICameraDisplayNamePhantom4ProCamera ||
                camera.displayName == DJICameraDisplayNamePhantom4AdvancedCamera ||
                camera.displayName == DJICameraDisplayNameX4S ||
@@ -143,23 +141,23 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         guard self.renderView != nil else {
             return
         }
-        self.renderView!.frame = self.videoPreviewView.bounds
-        self.videoPreviewView.addSubview(self.renderView!)
+        self.renderView!.frame = self.videoPreviewContainerView.bounds
+        self.videoPreviewContainerView.addSubview(self.renderView!)
         self.renderView?.isHidden = true
     }
     
     func cleanupRenderViewPlaybacker() {
-        self.videoPreviewView.removeFromSuperview()
+        self.videoPreviewContainerView.removeFromSuperview()
         self.renderView = nil
     }
     
     func setupVideoPreviewer() {
-        self.showVideoPreiviewView = UIView(frame: self.videoPreviewView.bounds)
-        self.videoPreviewView.addSubview(self.showVideoPreiviewView!)
+        self.videoPreviewView = UIView(frame: self.videoPreviewContainerView.bounds)
+        self.videoPreviewContainerView.addSubview(self.videoPreviewView!)
         DJIVideoPreviewer.instance().type = DJIVideoPreviewerType.autoAdapt
         DJIVideoPreviewer.instance()?.start()
         DJIVideoPreviewer.instance()?.reset()
-        DJIVideoPreviewer.instance()?.setView(self.showVideoPreiviewView)
+        DJIVideoPreviewer.instance()?.setView(self.videoPreviewView)
         self.previewerAdapter = VideoPreviewerAdapter()
         self.previewerAdapter?.start()
 
@@ -171,9 +169,9 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     }
     
     func cleanupVideoPreviewer() {
-        if let showVideoPreviewView = self.showVideoPreiviewView {
+        if let showVideoPreviewView = self.videoPreviewView {
             showVideoPreviewView.removeFromSuperview()
-            self.showVideoPreiviewView = nil
+            self.videoPreviewView = nil
         }
         DJIVideoPreviewer.instance()?.unSetView()
     }
@@ -203,7 +201,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         self.mediaList?.removeAll()
         self.mediaList?.append(contentsOf: mediaList)
         
-        if let mediaTaskScheduler = DemoUtility.fetchCamera()?.mediaManager?.taskScheduler {
+        if let mediaTaskScheduler = fetchCamera()?.mediaManager?.taskScheduler {
             mediaTaskScheduler.suspendAfterSingleFetchTaskFailure = false
             mediaTaskScheduler.resume(completion: nil)
             self.mediaList?.forEach({ (file:DJIMediaFile) in
@@ -300,8 +298,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         }
         self.selectedMedia?.fetchData(withOffset: previousOffset, update: DispatchQueue.main, update: {[weak self] (data:Data?, isComplete: Bool, error:Error?) in
             if let error = error {
-                //[target.statusAlertView updateMessage:[[NSString alloc] initWithFormat:@"Download Media Failed:%@",error]];
-                print("Download Media Failed:%@",error)//TODO: update statusAlertView instead of just printing...
+                self?.statusAlertView?.update(message: "Download Media Failed: \(error.localizedDescription)")
                 if let unwrappedSelf = self {
                     unwrappedSelf.perform(#selector(unwrappedSelf.dismissStatusAlertView), with: nil, afterDelay: 2.0)
                 }
@@ -343,7 +340,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
                     self.positionTextField.placeholder = "\(Int(selectedMedia.durationInSeconds)) sec"
                     self.mediaManager?.playVideo(selectedMedia, withCompletion: { (error:Error?) in
                         if let error = error {
-                            DemoUtility.show(result: "Play Video Failed: \(error.localizedDescription)")
+                            showAlertWith("Play Video Failed: \(error.localizedDescription)")
                         }
                     })
                 }
@@ -354,7 +351,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     @IBAction func resumeBtnAction(_ sender: Any) {
         self.mediaManager?.resume(completion: { (error:Error?) in
             if let error = error {
-                DemoUtility.show(result: "Resume failed: \(error.localizedDescription)")
+                showAlertWith("Resume failed: \(error.localizedDescription)")
             }
         })
     }
@@ -362,7 +359,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     @IBAction func pauseBtnAction(_ sender: Any) {
         self.mediaManager?.pause(completion: { (error:Error?) in
             if let error = error {
-                DemoUtility.show(result: "Pause failed: \(error.localizedDescription)")
+                showAlertWith("Pause failed: \(error.localizedDescription)")
             }
         })
     }
@@ -370,32 +367,28 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     @IBAction func stopBtnAction(_ sender: Any) {
         self.mediaManager?.stop(completion: { (error: Error?) in
             if let error = error {
-                DemoUtility.show(result: "Stop failed: \(error.localizedDescription)")
+                showAlertWith("Stop failed: \(error.localizedDescription)")
             }
         })
     }
     
-    
-    //TODO: where's this action coming from? DJIScrollView.nib?
-    //
-    //- (IBAction)moveToPositionAction:(id)sender {
-    //    NSUInteger second = 0;
-    //    if (self.positionTextField.text.length) {
-    //        second = [self.positionTextField.text floatValue];
-    //    }
-    //
-    //    WeakRef(target);
-    //    [self.mediaManager moveToPosition:second withCompletion:^(NSError * _Nullable error) {
-    //        WeakReturn(target);
-    //        if (error) {
-    //            //ShowResult(@"Move to position failed: %@", error.description);
-    //        }
-    //        [target.positionTextField setText: @""];
-    //    }];
-    //
-    //}
-    //
-    
+    //Unable to get this method to work, but the objc demo gives the same error at least...
+    @IBAction func moveToPositionAction(_ sender: Any) {
+        var desiredPosition : Float?
+        if let inputText = self.positionTextField.text {
+            if let positionInteger = Float(inputText) {
+                desiredPosition = positionInteger
+            }
+        }
+        guard let desiredPosition = desiredPosition else { return }
+        self.mediaManager?.move(toPosition: desiredPosition, withCompletion: { [weak self] (error:Error?) in
+            if let error = error {
+                showAlertWith("Move to position failed: \(error.localizedDescription)")
+            }
+            self?.positionTextField.text = ""
+        })
+    }
+
     @IBAction func showStatusBtnAction(_ sender: Any) {
         self.statusView?.isHidden = false
         self.statusView?.show()
@@ -405,14 +398,13 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     
     func savePhotoWithData(data:Data?) {
         if let data = data {
-            let tmpDir = NSTemporaryDirectory() as NSString //TODO: how to do this with String?
+            let tmpDir = NSTemporaryDirectory() as NSString
             let tmpImageFilePath = tmpDir.appendingPathComponent("tmpimage.jpg")
-            if let url = URL(string:tmpImageFilePath) {
-                do {
-                    try data.write(to: url)
-                } catch {
-                    print("failed to write data to file. Error: \(error)")
-                }
+            let url = URL(fileURLWithPath:tmpImageFilePath)
+            do {
+                try data.write(to: url)
+            } catch {
+                print("failed to write data to file. Error: \(error)")
             }
             
             guard let imageURL = URL(string: tmpImageFilePath) else {
@@ -420,15 +412,14 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
                 return
             }
             PHPhotoLibrary.shared().performChanges {
-                //__unused PHAssetChangeRequest *req = [PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:imageURL];
-                _ = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: imageURL)
+                PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: imageURL)
             } completionHandler: { (success:Bool, error: Error?) in
                 print("success = \(success), error = \(error?.localizedDescription ?? "no")")
             }
         }
     }
     
-    func imageDidFinishSaving(error:NSError?, contextInfo:Any) {// void* = Any? Data?
+    func imageDidFinishSaving(error:NSError?, contextInfo:Any) {
         var message = ""
         if let error = error {
             //Show message when save image failed
@@ -458,7 +449,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         stateString.append("Status: \(self.statusToString(status:state.playbackStatus) ?? "nil")\n")
         stateString.append("Position: \(state.playingPosition)\n")
     
-        self.statusView?.write(status: stateString)//TODO: where should this be appearing? check objc version...
+        self.statusView?.write(status: stateString)
     }
     
     func manager(_ manager: DJIMediaManager, didUpdateVideoPlaybackData data: UnsafeMutablePointer<UInt8>, length: Int, forRendering: Bool) {
@@ -475,7 +466,6 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         return self.mediaList?.count ?? 0
     }
     
-    //TODO: should all delegate functions be private? should I be going through making methods private if possible?
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "mediaFileCell", for:indexPath)
         
@@ -526,12 +516,12 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         if let currentMedia = self.mediaList?[indexPath.row] {
             self.mediaManager?.delete([currentMedia], withCompletion: { (failedFiles: [DJIMediaFile], error: Error?) in
                 if let error = error {
-                    DemoUtility.show(result: "Delete File Failed: \(error.localizedDescription)")
+                    showAlertWith("Delete File Failed: \(error.localizedDescription)")
                     for media:DJIMediaFile in failedFiles {
                         print("%@ delete failed",media.fileName)
                     }
                 } else {
-                    DemoUtility.show(result: "Delete File Successfully")
+                    showAlertWith("Delete File Successfully")
                     self.mediaList?.remove(at: indexPath.row)
                     self.mediaTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
                 }

@@ -34,7 +34,6 @@ class DJIScrollView : UIView, UIScrollViewDelegate {
     }
     
     func setup() {
-        //TODO: use type(of:) to get class type
         Bundle.main.loadNibNamed("DJIScrollView", owner: self, options: nil)
         self.addSubview(self.view)
         
@@ -57,46 +56,18 @@ class DJIScrollView : UIView, UIScrollViewDelegate {
         self.statusTextView?.backgroundColor = UIColor.clear
         self.statusTextView?.textColor = UIColor.white
         
-        //TODO: revisit these force unwraps, check how cristina did UXSDK UIKit autolayout unwrapping
-        self.scrollView.contentSize = (self.statusTextView?.bounds.size)!
-        self.scrollView.addSubview(self.statusTextView!)
+        if let desiredScrollViewSize = self.statusTextView?.bounds.size {
+            self.scrollView.contentSize = desiredScrollViewSize
+        }
+        if let statusTextView = self.statusTextView {
+            self.scrollView.addSubview(statusTextView)
+        }
         self.scrollView.layer.borderColor = UIColor.black.cgColor
         self.scrollView.layer.borderWidth = 1.3
         self.scrollView.layer.cornerRadius = 3.0
         self.scrollView.layer.masksToBounds = true
         self.scrollView.isPagingEnabled = false
     }
-    
-    //TODO: need to implement all UIView initializers?
-    //- (id)initWithFrame:(CGRect)frame {
-    //    self = [super initWithFrame:frame];
-    //    if (self) {
-    //    }
-    //    return self;
-    //}
-    
-    //TODO: what to do with all this commented code?
-    //- (id)initWithCoder:(NSCoder *)aDecoder {
-    //    self = [super initWithCoder:aDecoder];
-    //    if(self) {
-    //        [self setup];
-    //    }
-    //    return self;
-    //}
-    //
-    //-(void) awakeFromNib
-    //{
-    //    [super awakeFromNib];
-    //
-    //    [self setup];
-    //}
-    //
-    //-(void) setTitle:(NSString *)title
-    //{
-    //    _title = title;
-    //    self.statusLabel.text = title;
-    //}
-    //
     
     public func write(status:String) {
         self.statusTextView?.text = status
@@ -109,8 +80,8 @@ class DJIScrollView : UIView, UIScrollViewDelegate {
             self.scrollView.contentOffset = CGPoint(x: 0, y: 0)
         }
     }
-    
-    public func onCloseButtonClicked(sender:Any) {
+
+    @IBAction func onCloseButtonClicked(_ sender: Any) {
         UIView.animate(withDuration: 0.25) {
             self.alpha = 0;
         }
@@ -127,10 +98,10 @@ class DJIScrollView : UIView, UIScrollViewDelegate {
         
         self.view.widthAnchor.constraint(equalToConstant: width).isActive = true
         self.widthAnchor.constraint(equalToConstant: width).isActive = true
-        //TODO: unwrap these more appropriately?
-        self.statusTextView?.translatesAutoresizingMaskIntoConstraints = false
         
         self.statusLabel.rightAnchor.constraint(equalTo: self.scrollView.leftAnchor).isActive = true
+        
+        self.statusTextView?.translatesAutoresizingMaskIntoConstraints = false
         self.statusTextView?.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
         self.statusTextView?.topAnchor.constraint(equalTo: self.scrollView.topAnchor).isActive = true
     }

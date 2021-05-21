@@ -46,7 +46,7 @@ class MainViewController: UIViewController, DJISDKManagerDelegate {
         ///If this demo is used in China, it's required to login to your DJI account to activate the application. Also you need to use DJI Go app to bind the aircraft to your DJI account. For more details, please check this demo's tutorial.
         DJISDKManager.userAccountManager().logIntoDJIUserAccount(withAuthorizationRequired: false) {(state: DJIUserAccountState, error: Error?) in
             if let error = error {
-                DemoUtility.show(result: "Login failed:\(error.localizedDescription)")
+                showAlertWith("Login failed:\(error.localizedDescription)")
             }
         }
     }
@@ -81,9 +81,9 @@ class MainViewController: UIViewController, DJISDKManagerDelegate {
     
     func appRegisteredWithError(_ error: Error?) {
         if let error = error {
-            DemoUtility.show(result: "Registration Error \(error.localizedDescription)")
+            showAlertWith("Registration Error \(error.localizedDescription)")
         } else {
-            DemoUtility.show(result: "Registration Success")
+            showAlertWith("Registration Success")
             if connectViaBridge {
                 DJISDKManager.enableBridgeMode(withBridgeAppIP: bridgeAppIP)
             } else {

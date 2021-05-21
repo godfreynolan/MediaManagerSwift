@@ -22,26 +22,11 @@ class DemoComponentHelper: DemoUtility {
         return DJISDKManager.product() as? DJIHandheld
     }
     
-    //TODO: test this to see if you need to unwrap to DJIAircraft or DJIHandheld before getting the gimbal object
-    public class func fetchGimbal() -> DJIGimbal? {
-        return DJISDKManager.product()?.gimbal
-    }
-    
     public class func fetchRemoteController() -> DJIRemoteController? {
         if let aircraft = DJISDKManager.product() as? DJIAircraft {
             return aircraft.remoteController
         }
         return nil
-    }
-    
-    //TODO: test this to see if you need to unwrap to DJIAircraft or DJIHandheld before getting the gimbal object
-    public class func fetchBattery() -> DJIBattery? {
-        return DJISDKManager.product()?.battery
-    }
-    
-    //TODO: test this to see if you need to unwrap to DJIAircraft or DJIHandheld before getting the gimbal object
-    public class func fetchAirlink() -> DJIAirLink? {
-        return DJISDKManager.product()?.airLink
     }
     
     public class func fetchPayload() -> DJIPayload? {
