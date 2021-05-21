@@ -55,9 +55,7 @@ class MainViewController: UIViewController, DJISDKManagerDelegate {
         let message = "Connection lost. Back to root. "
         let cancelAction = UIAlertAction.init(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
         let backAction = UIAlertAction.init(title: "Back", style: UIAlertAction.Style.default) { (action: UIAlertAction) in
-            if !(self.navigationController?.topViewController is MainViewController) {//TODO: why not delete this check? what's the harm in popping anyway?
-                self.navigationController?.popToRootViewController(animated: true)
-            }
+            self.navigationController?.popToRootViewController(animated: true)
         }
         let alertViewController = UIAlertController.init(title: nil, message: message, preferredStyle: UIAlertController.Style.alert)
         alertViewController.addAction(cancelAction)
@@ -76,7 +74,6 @@ class MainViewController: UIViewController, DJISDKManagerDelegate {
             self.modelNameLabel.text = "Model: \(model)"
             self.modelNameLabel.isHidden = false
         } else {
-            //TODO: use localized string?
             self.connectStatusLabel.text = "Status: Product Not Connected"
             self.modelNameLabel.text = "Model Unknown"
         }

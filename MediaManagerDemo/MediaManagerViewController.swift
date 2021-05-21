@@ -33,9 +33,8 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     var statusView : DJIScrollView?
     var selectedCellIndexPath : IndexPath?
     var renderView : DJIRTPlayerRenderView?
-
-    //TODO: rewrite as property
-    func prefersStatusBarHidden() -> Bool {
+    
+    override var prefersStatusBarHidden : Bool {
         return false
     }
     
@@ -151,7 +150,6 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
     
     func cleanupRenderViewPlaybacker() {
         self.videoPreviewView.removeFromSuperview()
-        self.videoPreviewView = nil //TODO: necessary? Test for memory leak...
         self.renderView = nil
     }
     
@@ -165,9 +163,9 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         self.previewerAdapter = VideoPreviewerAdapter()
         self.previewerAdapter?.start()
 
-        if TARGET_IPHONE_SIMULATOR == 1 { //TODO: TARGET_IPHONE_SIMULATOR is depricated... look up replacement
-            DJIVideoPreviewer.instance().enableHardwareDecode = true
-        }
+        #if targetEnvironment(simulator)
+        DJIVideoPreviewer.instance().enableHardwareDecode = true
+        #endif
         
         self.previewerAdapter?.setupFrameControlHandler()
     }
