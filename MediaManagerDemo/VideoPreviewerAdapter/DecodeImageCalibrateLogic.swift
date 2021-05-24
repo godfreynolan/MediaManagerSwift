@@ -2,8 +2,8 @@
 //  DecodeImageCalibrateLogic.swift
 //  DJISDKSwiftDemo
 //
-//  Created by DJI on 2019/1/15.
-//  Copyright © 2019 DJI. All rights reserved.
+//  Created by Samuel Scherer on 4/22/2021
+//  Copyright © 2021 RIIS. All rights reserved.
 //
 import Foundation
 import DJISDK
