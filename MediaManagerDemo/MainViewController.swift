@@ -12,7 +12,7 @@ import DJIUXSDK
 
 class MainViewController: UIViewController, DJISDKManagerDelegate {
     
-    fileprivate let connectViaBridge = true
+    fileprivate let connectViaBridge = false
     fileprivate let bridgeAppIP = "192.168.128.169"
     
     @IBOutlet weak var connectStatusLabel: UILabel!
