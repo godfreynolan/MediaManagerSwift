@@ -19,26 +19,8 @@ func showAlertWith(_ result:String) {
     }
 }
 
-func fetchProduct () -> DJIBaseProduct? {
-    return DJISDKManager.product()
-}
-
-func fetchAircraft () -> DJIAircraft? {
-    return DJISDKManager.product() as? DJIAircraft
-}
-
 func fetchCamera () -> DJICamera? {
     let aircraft = DJISDKManager.product() as? DJIAircraft
     return aircraft?.camera
 }
 
-func fetchFlightController() -> DJIFlightController? {
-    let aircraft = DJISDKManager.product() as? DJIAircraft
-    return aircraft?.flightController
-}
-
-class DemoUtility: NSObject {
-
-    
-
-}

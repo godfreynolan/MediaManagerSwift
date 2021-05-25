@@ -12,7 +12,6 @@
 		3A58A100262A1F4500753039 /* MediaManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A58A0FF262A1F4500753039 /* MediaManagerViewController.swift */; };
 		3A805F9926273AA200B3899B /* DemoUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805F9826273AA200B3899B /* DemoUtility.swift */; };
 		3A805F9B26273B7700B3899B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805F9A26273B7700B3899B /* AppDelegate.swift */; };
-		3A805FA926273FF900B3899B /* DemoComponentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805FA826273FF900B3899B /* DemoComponentHelper.swift */; };
 		3A805FB326274CEC00B3899B /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805FB226274CEC00B3899B /* AlertView.swift */; };
 		3A805FB526275C9C00B3899B /* DefaultLayoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805FB426275C9C00B3899B /* DefaultLayoutViewController.swift */; };
 		3A805FBB2627626100B3899B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A805FBA2627626100B3899B /* MainViewController.swift */; };
@@ -46,7 +45,6 @@
 		3A58A0FF262A1F4500753039 /* MediaManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManagerViewController.swift; sourceTree = "<group>"; };
 		3A805F9826273AA200B3899B /* DemoUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoUtility.swift; sourceTree = "<group>"; };
 		3A805F9A26273B7700B3899B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3A805FA826273FF900B3899B /* DemoComponentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoComponentHelper.swift; sourceTree = "<group>"; };
 		3A805FB226274CEC00B3899B /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		3A805FB426275C9C00B3899B /* DefaultLayoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLayoutViewController.swift; sourceTree = "<group>"; };
 		3A805FBA2627626100B3899B /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -103,7 +101,6 @@
 			isa = PBXGroup;
 			children = (
 				3A805F9826273AA200B3899B /* DemoUtility.swift */,
-				3A805FA826273FF900B3899B /* DemoComponentHelper.swift */,
 				3A805FB226274CEC00B3899B /* AlertView.swift */,
 				3A805FC826276DB600B3899B /* DJIScrollView.swift */,
 				A41CA8B91F39962B0087BE43 /* DJIScrollView.xib */,
@@ -282,7 +279,6 @@
 				3A805F9B26273B7700B3899B /* AppDelegate.swift in Sources */,
 				3A805FBB2627626100B3899B /* MainViewController.swift in Sources */,
 				3A58A100262A1F4500753039 /* MediaManagerViewController.swift in Sources */,
-				3A805FA926273FF900B3899B /* DemoComponentHelper.swift in Sources */,
 				3A805FB326274CEC00B3899B /* AlertView.swift in Sources */,
 				3A805FC926276DB600B3899B /* DJIScrollView.swift in Sources */,
 				3A25457E2630FE9F002987AD /* DecodeImageCalibrateLogic.swift in Sources */,
