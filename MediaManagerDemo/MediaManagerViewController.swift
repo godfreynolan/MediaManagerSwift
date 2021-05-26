@@ -122,7 +122,6 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         
         self.statusView = DJIScrollView.viewWith(viewController: self)
         self.statusView?.isHidden = true
-        
     }
     
     func setupRenderViewPlaybacker() {
@@ -372,7 +371,6 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
         })
     }
     
-    //Unable to get this method to work, but the objc demo gives the same error at least...
     @IBAction func moveToPositionAction(_ sender: Any) {
         var desiredPosition : Float?
         if let inputText = self.positionTextField.text {
