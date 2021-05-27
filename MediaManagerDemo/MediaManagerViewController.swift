@@ -178,6 +178,7 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
 
     func loadMediaList() {
         self.loadingIndicator.isHidden = false
+        self.view.bringSubviewToFront(self.loadingIndicator)
         if self.mediaManager?.sdCardFileListState == DJIMediaFileListState.syncing ||
            self.mediaManager?.sdCardFileListState == DJIMediaFileListState.deleting {
             print("Media Manager is busy. ")
@@ -189,10 +190,11 @@ class MediaManagerViewController : UIViewController, DJICameraDelegate, DJIMedia
                     print("Fetch Media File List Success.")
                     if let mediaFileList = self?.mediaManager?.sdCardFileListSnapshot() {
                         self?.updateMediaList(mediaList:mediaFileList)
+                        self?.loadingIndicator.isHidden = true
+                        
                     }
                 }
             })
-            
         }
     }
     
