@@ -68,9 +68,8 @@ installed.
 
 ## Tutorial
 
-For this demo's tutorial: **Creating a Media Manager Application**, please refer to <https://developer.dji.com/mobile-sdk/documentation/ios-tutorials/MediaManagerDemo.html>.
-
-The tutorial is currently only available in Objective C, but there are plans to create a swift version.
+For this demo's tutorial: **Creating a Media Manager Application**, please refer to <https://riis.com/blog/dji-sdk-tutorial-creating-a-media-manager-application/>.
+The original Objective C tutorial is available on the DJI developer website.
 
 ## Feedback
 When reporting bugs, at a minimum please let us know:
